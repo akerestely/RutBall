@@ -2,6 +2,7 @@
 #include <glut.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "Ball.h"
 
 #define checkImageWidth 64
 #define checkImageHeight 64
@@ -53,7 +54,7 @@ void display(void)
    glEnable(GL_TEXTURE_2D);
    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
    glBindTexture(GL_TEXTURE_2D, texName);
-   glBegin(GL_QUADS);
+ /*  glBegin(GL_QUADS);
    glTexCoord2f(0.0, 0.0); glVertex3f(-2.0, -1.0, 0.0);
    glTexCoord2f(0.0, 1.0); glVertex3f(-2.0, 1.0, 0.0);
    glTexCoord2f(1.0, 1.0); glVertex3f(0.0, 1.0, 0.0);
@@ -63,7 +64,11 @@ void display(void)
    glTexCoord2f(0.0, 1.0); glVertex3f(1.0, 1.0, 0.0);
    glTexCoord2f(1.0, 1.0); glVertex3f(2.41421, 1.0, -1.41421);
    glTexCoord2f(1.0, 0.0); glVertex3f(2.41421, -1.0, -1.41421);
-   glEnd();
+   glEnd();*/
+
+   
+   Ball sphere(1, Point(0,0,0));
+   sphere.Draw();
    glFlush();
    glDisable(GL_TEXTURE_2D);
 }
