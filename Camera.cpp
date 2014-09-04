@@ -13,7 +13,7 @@ void Camera::MoveZ(double dz)
 {
 	this->dz+=dz;
 }
-void Camera::RoateY(double ry)
+void Camera::RotateY(double ry)
 {
 	this->ry+=ry;
 }

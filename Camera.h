@@ -8,6 +8,6 @@ public:
 	Camera();
 	void MoveX(double dx);
 	void MoveZ(double dz);
-	void RoateY(double ry);
+	void RotateY(double ry);
 	void Render();
 };
