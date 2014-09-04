@@ -26,12 +26,12 @@ void display(void)
    
    glTranslatef(0.0f, -0.5f, -7.0f);  // Move right and into the screen 
    cam.Render();
-
+   glRotatef(180, 0, 1, 0); 
    for (int i = 0; i < nodes.size(); i++)
    {
 	   nodes[i].Draw();
-   }
- 
+   }	
+   glRotatef(-180, 0, 1, 0);
    glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
 }
 
