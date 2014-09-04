@@ -15,10 +15,10 @@ void Node::Draw()
 {
 	glBegin(GL_LINE_LOOP);
 	glColor3f(1., 0, 0);
-	glVertex3d(-((center.x - 36) * 10 + WIDTH / 2), center.y, (center.z - 39) * 10 + WIDTH / 2);
-	glVertex3d(-((center.x - 36) * 10 - WIDTH / 2), center.y, (center.z - 39) * 10 + WIDTH / 2);
-	glVertex3d(-((center.x - 36) * 10 - WIDTH / 2), center.y, (center.z - 39) * 10 - WIDTH / 2);
-	glVertex3d(-((center.x - 36) * 10 + WIDTH / 2), center.y, (center.z - 39) * 10 - WIDTH / 2);
+	glVertex3d(-((center.x - 36) * SCALLING + WIDTH / 2), center.y, (center.z - 39) * SCALLING + WIDTH / 2);
+	glVertex3d(-((center.x - 36) * SCALLING - WIDTH / 2), center.y, (center.z - 39) * SCALLING + WIDTH / 2);
+	glVertex3d(-((center.x - 36) * SCALLING - WIDTH / 2), center.y, (center.z - 39) * SCALLING - WIDTH / 2);
+	glVertex3d(-((center.x - 36) * SCALLING + WIDTH / 2), center.y, (center.z - 39) * SCALLING - WIDTH / 2);
 	glEnd();
 
 	/*glBegin(GL_TRIANGLE_FAN);
@@ -28,4 +28,8 @@ void Node::Draw()
 	glVertex3d(-((center.x - 36) * 10 - WIDTH / 2), center.y, (center.z - 39) * 10 - WIDTH / 2);
 	glVertex3d(-((center.x - 36) * 10 + WIDTH / 2), center.y, (center.z - 39) * 10 - WIDTH / 2);
 	glEnd();*/
+}
+std::vector<int>& Node::getDestinations()
+{
+	return destinations;
 }

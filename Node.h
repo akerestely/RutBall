@@ -2,7 +2,8 @@
 #include "Drawable.h"
 #include<vector>
 
-#define WIDTH 0.02
+#define WIDTH 0.05
+#define SCALLING 100
 class Node:public Drawable
 {
 	int id;
