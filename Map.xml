@@ -10,8 +10,12 @@
     <node id="6" longitude="39.09000" latitude="36.35666"/>
     <node id="7" longitude="39.03333" latitude="36.36835"/>
     <node id="8" longitude="39.01333" latitude="36.24833"/>
-    <node id="9" longitude="39.03166" latitude="36.22333"/>
+    <node id="9" longitude="39.02833" latitude="36.26333"/>
     <node id="10" longitude="39.07000" latitude="36.24833"/>
+    <node id="11" longitude="39.13166" latitude="36.34833"/>
+    <node id="12" longitude="39.14666" latitude="36.34333"/>
+    <node id="13" longitude="39.15666" latitude="36.34500"/>
+    <node id="14" longitude="39.16000" latitude="36.32666"/>
   </nodes>
   <arcs>
     <arc from="0" to="1" />
@@ -21,9 +25,17 @@
     <arc from="4" to="5" />
     <arc from="4" to="6" />
     <arc from="6" to="7" />
+    <arc from="6" to="11" />
     <arc from="7" to="8" />
     <arc from="8" to="9" />
     <arc from="9" to="10" />
     <arc from="10" to="3" />
+    <arc from="11" to="6" />
+    <arc from="11" to="12" />
+    <arc from="12" to="11" />
+    <arc from="12" to="13" />
+    <arc from="13" to="12" />
+    <arc from="13" to="14" />
+    <arc from="14" to="13" />
   </arcs>
 </map>
