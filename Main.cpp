@@ -5,7 +5,10 @@
 #include "CameraSpectator.h"
 #include "Tools.h"
 #include "vector"
+#include "Ball.h"
 CCamera cam;
+Ball ball(1, Point(0,0,0));
+
 std::vector<Node> nodes;
 void initGL() {
    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
@@ -26,6 +29,7 @@ void display(void)
    
    glTranslatef(0.0f, -0.5f, -7.0f);  // Move right and into the screen 
    cam.Render();
+   ball.Draw();
    glRotatef(180, 0, 1, 0); 
    for (int i = 0; i < nodes.size(); i++)
    {
