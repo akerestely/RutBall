@@ -5,6 +5,12 @@ Node::Node(int id, Point center)
 {
 	
 }
+
+Node::Node()
+{
+	center=Point();
+	id=-1;
+}
 void Node::Draw()
 {
 	glBegin(GL_TRIANGLE_FAN);
@@ -14,4 +20,9 @@ void Node::Draw()
 	glVertex3d(-((center.x - 36) * 10 - WIDTH / 2), center.y, (center.z - 39) * 10 - WIDTH / 2);
 	glVertex3d(-((center.x - 36) * 10 + WIDTH / 2), center.y, (center.z - 39) * 10 - WIDTH / 2);
 	glEnd();
+}
+
+std::vector<int>& Node::getDestinations()
+{
+	return destinations;
 }

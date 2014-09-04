@@ -1,15 +1,29 @@
 <?xml version="1.0"?>
 <map description="Brasov">
   <nodes>
-    <node id="4" longitude="39.05166" latitude="36.32833"/>
-    <node id="3" longitude="39.06833" latitude="36.32333"/>
+    <node id="0" longitude="39.05166" latitude="36.32833"/>
+    <node id="1" longitude="39.06833" latitude="36.32333"/>
     <node id="2" longitude="39.05833" latitude="36.26333"/>
-    <node id="1" longitude="39.07166" latitude="36.26000"/>
-    <node id="6" longitude="39.07666" latitude="36.27833"/>
-    <node id="7" longitude="39.09000" latitude="36.35666"/>
-    <node id="8" longitude="39.03333" latitude="36.36835"/>
-    <node id="9" longitude="39.01333" latitude="36.24833"/>
-    <node id="10" longitude="39.03166" latitude="36.22333"/>
-    <node id="0" longitude="39.07000" latitude="36.24833"/>
+    <node id="3" longitude="39.07166" latitude="36.26000"/>
+    <node id="4" longitude="39.07666" latitude="36.27833"/>
+    <node id="5" longitude="39.06916" latitude="36.28083"/>
+    <node id="6" longitude="39.09000" latitude="36.35666"/>
+    <node id="7" longitude="39.03333" latitude="36.36835"/>
+    <node id="8" longitude="39.01333" latitude="36.24833"/>
+    <node id="9" longitude="39.03166" latitude="36.22333"/>
+    <node id="10" longitude="39.07000" latitude="36.24833"/>
   </nodes>
+  <arcs>
+    <arc from="0" to="1" />
+    <arc from="1" to="2" />
+    <arc from="2" to="3" />
+    <arc from="3" to="4" />
+    <arc from="4" to="5" />
+    <arc from="4" to="6" />
+    <arc from="6" to="7" />
+    <arc from="7" to="8" />
+    <arc from="8" to="9" />
+    <arc from="9" to="10" />
+    <arc from="10" to="3" />
+  </arcs>
 </map>

@@ -7,5 +7,6 @@ protected:
 	Point center;
 public:
 	Drawable(Point center);
+	Drawable();
 	virtual void Draw() = 0;
 };

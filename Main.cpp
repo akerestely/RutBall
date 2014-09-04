@@ -5,8 +5,9 @@
 #include "CameraSpectator.h"
 #include "Tools.h"
 #include "vector"
+#include<map>
 CCamera cam;
-std::vector<Node> nodes;
+std::map<int,Node> nodes;
 void initGL() {
    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
    glClearDepth(1.0f);                   // Set background depth to farthest
