@@ -2,10 +2,11 @@
 #include <glut.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "Camera.h"
-
-Camera cam;
-
+#include "CameraSpectator.h"
+#include "Tools.h"
+#include "vector"
+CCamera cam;
+std::vector<Node> nodes;
 void initGL() {
    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
    glClearDepth(1.0f);                   // Set background depth to farthest
@@ -23,91 +24,14 @@ void display(void)
    // Render a color-cube consisting of 6 quads with different colors
    glLoadIdentity();                 // Reset the model-view matrix
    
-   glTranslatef(1.5f, 0.0f, -7.0f);  // Move right and into the screen 
+   glTranslatef(0.0f, -0.5f, -7.0f);  // Move right and into the screen 
    cam.Render();
-   glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
-      // Top face (y = 1.0f)
-      // Define vertices in counter-clockwise (CCW) order with normal pointing out
-      glColor3f(0.0f, 1.0f, 0.0f);     // Green
-      glVertex3f( 1.0f, 1.0f, -1.0f);
-      glVertex3f(-1.0f, 1.0f, -1.0f);
-      glVertex3f(-1.0f, 1.0f,  1.0f);
-      glVertex3f( 1.0f, 1.0f,  1.0f);
- 
-      // Bottom face (y = -1.0f)
-      glColor3f(1.0f, 0.5f, 0.0f);     // Orange
-      glVertex3f( 1.0f, -1.0f,  1.0f);
-      glVertex3f(-1.0f, -1.0f,  1.0f);
-      glVertex3f(-1.0f, -1.0f, -1.0f);
-      glVertex3f( 1.0f, -1.0f, -1.0f);
- 
-      // Front face  (z = 1.0f)
-      glColor3f(1.0f, 0.0f, 0.0f);     // Red
-      glVertex3f( 1.0f,  1.0f, 1.0f);
-      glVertex3f(-1.0f,  1.0f, 1.0f);
-      glVertex3f(-1.0f, -1.0f, 1.0f);
-      glVertex3f( 1.0f, -1.0f, 1.0f);
- 
-      // Back face (z = -1.0f)
-      glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
-      glVertex3f( 1.0f, -1.0f, -1.0f);
-      glVertex3f(-1.0f, -1.0f, -1.0f);
-      glVertex3f(-1.0f,  1.0f, -1.0f);
-      glVertex3f( 1.0f,  1.0f, -1.0f);
- 
-      // Left face (x = -1.0f)
-      glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-      glVertex3f(-1.0f,  1.0f,  1.0f);
-      glVertex3f(-1.0f,  1.0f, -1.0f);
-      glVertex3f(-1.0f, -1.0f, -1.0f);
-      glVertex3f(-1.0f, -1.0f,  1.0f);
- 
-      // Right face (x = 1.0f)
-      glColor3f(1.0f, 0.0f, 1.0f);     // Magenta
-      glVertex3f(1.0f,  1.0f, -1.0f);
-      glVertex3f(1.0f,  1.0f,  1.0f);
-      glVertex3f(1.0f, -1.0f,  1.0f);
-      glVertex3f(1.0f, -1.0f, -1.0f);
-   glEnd();  // End of drawing color-cube
- 
-   // Render a pyramid consists of 4 triangles
-   glTranslatef(-1.5f, 0.0f, 7.0f);  // Move right and into the screen 
-   glTranslatef(-1.5f, 0.0f, -6.0f);  // Move left and into the screen
- 
-   glBegin(GL_TRIANGLES);           // Begin drawing the pyramid with 4 triangles
-      // Front
-      glColor3f(1.0f, 0.0f, 0.0f);     // Red
-      glVertex3f( 0.0f, 1.0f, 0.0f);
-      glColor3f(0.0f, 1.0f, 0.0f);     // Green
-      glVertex3f(-1.0f, -1.0f, 1.0f);
-      glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-      glVertex3f(1.0f, -1.0f, 1.0f);
- 
-      // Right
-      glColor3f(1.0f, 0.0f, 0.0f);     // Red
-      glVertex3f(0.0f, 1.0f, 0.0f);
-      glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-      glVertex3f(1.0f, -1.0f, 1.0f);
-      glColor3f(0.0f, 1.0f, 0.0f);     // Green
-      glVertex3f(1.0f, -1.0f, -1.0f);
- 
-      // Back
-      glColor3f(1.0f, 0.0f, 0.0f);     // Red
-      glVertex3f(0.0f, 1.0f, 0.0f);
-      glColor3f(0.0f, 1.0f, 0.0f);     // Green
-      glVertex3f(1.0f, -1.0f, -1.0f);
-      glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-      glVertex3f(-1.0f, -1.0f, -1.0f);
- 
-      // Left
-      glColor3f(1.0f,0.0f,0.0f);       // Red
-      glVertex3f( 0.0f, 1.0f, 0.0f);
-      glColor3f(0.0f,0.0f,1.0f);       // Blue
-      glVertex3f(-1.0f,-1.0f,-1.0f);
-      glColor3f(0.0f,1.0f,0.0f);       // Green
-      glVertex3f(-1.0f,-1.0f, 1.0f);
-   glEnd();   // Done drawing the pyramid
- 
+   glRotatef(180, 0, 1, 0); 
+   for (int i = 0; i < nodes.size(); i++)
+   {
+	   nodes[i].Draw();
+   }	
+   glRotatef(-180, 0, 1, 0);
    glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
 }
 
@@ -135,31 +59,29 @@ void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integ
 void keyboard (unsigned char key, int x, int y)
 {
    switch (key) {
-	  case 'w':cam.MoveZ(0.3);break;
-	  case 's':cam.MoveZ(-0.3);break;
-	  case 'a':cam.MoveX(0.2);break;
-	  case 'd':cam.MoveX(-0.2);break;
-	  case 'q':cam.RotateY(5);break;
-	  case 'e':cam.RotateY(-5);break;
+	  case 'w':cam.RotateX(-5);break;
+	  case 's':cam.RotateX(5);break;
+	  case 'a':cam.RotateY(-5);break;
+	  case 'd':cam.RotateY(5);break;
    }
 }
 
-//int main(int argc, char** argv)
-//{
-//   glutInit(&argc, argv);
-//   glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
-//   glutInitWindowSize(250, 250);
-//   glutInitWindowPosition(100, 100);
-//   glutCreateWindow(argv[0]);
-//   initGL();
-//   glutDisplayFunc(display);
-//   glutReshapeFunc(reshape);
-//   glutKeyboardFunc(keyboard);
-//   glutTimerFunc(0, timer, 0);
-//   glutMainLoop();
-//   return 0; 
-//}
+void handleSpecialKeypress(int key, int x, int y)
+{
+	switch (key)
+	{
+	case GLUT_KEY_LEFT:  cam.MoveX(-0.3);  break;
+	case GLUT_KEY_RIGHT: cam.MoveX(0.3); break;
+	case GLUT_KEY_UP:    cam.MoveZ(-0.2);  break;
+	case GLUT_KEY_DOWN:  cam.MoveZ(0.2); break; 
+	}
+}
 int main(int argc, char** argv) {
+
+	if (!Tools::ReadNodesFromXML("Map.xml", nodes))
+	{
+		return 0;
+	}
    glutInit(&argc, argv);            // Initialize GLUT
    glutInitDisplayMode(GLUT_DOUBLE); // Enable double buffered mode
    glutInitWindowSize(640, 480);   // Set the window's initial width & height
@@ -169,6 +91,7 @@ int main(int argc, char** argv) {
    glutReshapeFunc(reshape);       // Register callback handler for window re-size event
    initGL();                       // Our own OpenGL initialization
    glutKeyboardFunc(keyboard);
+   glutSpecialFunc(handleSpecialKeypress);
    glutTimerFunc(0, timer, 0);     // First timer call immediately [NEW]
    glutMainLoop();                 // Enter the infinite event-processing loop
    return 0;
