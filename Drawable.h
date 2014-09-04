@@ -3,6 +3,7 @@
 
 class Drawable
 {
+protected:
 	Point center;
 public:
 	Drawable(Point center);

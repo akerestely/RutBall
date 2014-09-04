@@ -175,6 +175,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Ball.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Drawable.cpp"
 				>
 			</File>
@@ -194,6 +198,10 @@
 			>
 			<File
 				RelativePath=".\Camera.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Ball.h"
 				>
 			</File>
 			<File
