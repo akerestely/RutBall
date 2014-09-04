@@ -2,7 +2,6 @@
 #include <glut.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "Ball.h"
 
 #define checkImageWidth 64
 #define checkImageHeight 64
@@ -66,9 +65,6 @@ void display(void)
    glTexCoord2f(1.0, 0.0); glVertex3f(2.41421, -1.0, -1.41421);
    glEnd();*/
 
-   
-   Ball sphere(1, Point(0,0,0));
-   sphere.Draw();
    glFlush();
    glDisable(GL_TEXTURE_2D);
 }
