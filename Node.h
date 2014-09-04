@@ -1,7 +1,7 @@
 #pragma once
 #include "Drawable.h"
 
-#define WIDTH 20
+#define WIDTH 0.02
 class Node:public Drawable
 {
 	int id;
