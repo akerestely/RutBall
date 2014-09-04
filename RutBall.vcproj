@@ -171,11 +171,15 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\Ball.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Camera.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Ball.cpp"
+				RelativePath=".\CameraSpectator.cpp"
 				>
 			</File>
 			<File
@@ -197,11 +201,15 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\Ball.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Camera.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Ball.h"
+				RelativePath=".\CameraSpectator.h"
 				>
 			</File>
 			<File

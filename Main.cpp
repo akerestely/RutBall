@@ -2,9 +2,9 @@
 #include <glut.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "Camera.h"
+#include "CameraSpectator.h"
 
-Camera cam;
+CCamera cam;
 
 void initGL() {
    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
@@ -135,30 +135,23 @@ void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integ
 void keyboard (unsigned char key, int x, int y)
 {
    switch (key) {
-	  case 'w':cam.MoveZ(0.3);break;
-	  case 's':cam.MoveZ(-0.3);break;
-	  case 'a':cam.MoveX(0.2);break;
-	  case 'd':cam.MoveX(-0.2);break;
-	  case 'q':cam.RotateY(5);break;
-	  case 'e':cam.RotateY(-5);break;
+	  case 'w':cam.RotateX(-5);break;
+	  case 's':cam.RotateX(5);break;
+	  case 'a':cam.RotateY(-5);break;
+	  case 'd':cam.RotateY(5);break;
    }
 }
 
-//int main(int argc, char** argv)
-//{
-//   glutInit(&argc, argv);
-//   glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
-//   glutInitWindowSize(250, 250);
-//   glutInitWindowPosition(100, 100);
-//   glutCreateWindow(argv[0]);
-//   initGL();
-//   glutDisplayFunc(display);
-//   glutReshapeFunc(reshape);
-//   glutKeyboardFunc(keyboard);
-//   glutTimerFunc(0, timer, 0);
-//   glutMainLoop();
-//   return 0; 
-//}
+void handleSpecialKeypress(int key, int x, int y)
+{
+	switch (key)
+	{
+	case GLUT_KEY_LEFT:  cam.MoveX(-0.3);  break;
+	case GLUT_KEY_RIGHT: cam.MoveX(0.3); break;
+	case GLUT_KEY_UP:    cam.MoveZ(-0.2);  break;
+	case GLUT_KEY_DOWN:  cam.MoveZ(0.2); break; 
+	}
+}
 int main(int argc, char** argv) {
    glutInit(&argc, argv);            // Initialize GLUT
    glutInitDisplayMode(GLUT_DOUBLE); // Enable double buffered mode
@@ -169,6 +162,7 @@ int main(int argc, char** argv) {
    glutReshapeFunc(reshape);       // Register callback handler for window re-size event
    initGL();                       // Our own OpenGL initialization
    glutKeyboardFunc(keyboard);
+   glutSpecialFunc(handleSpecialKeypress);
    glutTimerFunc(0, timer, 0);     // First timer call immediately [NEW]
    glutMainLoop();                 // Enter the infinite event-processing loop
    return 0;
