@@ -51,8 +51,3 @@ std::vector<int>& Node::getDestinations()
 {
 	return destinations;
 }
-
-double Node::GetRadius()
-{
-	return WIDTH / 2;
-}
