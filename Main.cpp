@@ -14,10 +14,13 @@ CCamera cam;
 Map brasovMap;
 
 void initGL() {
+
    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
    glClearDepth(1.0f);                   // Set background depth to farthest
    glEnable(GL_DEPTH_TEST);   // Enable depth testing for z-culling
    glDepthFunc(GL_LEQUAL);    // Set the type of depth-test
+   glEnable(GL_TEXTURE_2D);
+   glEnable(GL_BLEND);
    glShadeModel(GL_SMOOTH);   // Enable smooth shading
    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Nice perspective corrections
    try
@@ -32,7 +35,9 @@ void initGL() {
 
 void display(void)
 {
+<<<<<<< HEAD
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
    glMatrixMode(GL_MODELVIEW);     // To operate on model-view matrix
  
    // Render a color-cube consisting of 6 quads with different colors
@@ -44,6 +49,13 @@ void display(void)
    cam.Render();
    brasovMap.Draw();
    glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
+
+	Building build1=Building(Point(1.35,0.,1.3),2,2);
+	build1.Draw();	
+	Building build2=Building(Point(5.2,0.,2.2),3,2);
+	build2.Draw();
+	
+	glutSwapBuffers();  // Swap the front and qback frame buffers (double buffering)
 }
 
 void timer(int value) 
