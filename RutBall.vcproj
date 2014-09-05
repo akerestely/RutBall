@@ -203,6 +203,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Texture.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Tools.cpp"
 				>
 			</File>
@@ -238,6 +242,10 @@
 			</File>
 			<File
 				RelativePath=".\Point.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Texture.h"
 				>
 			</File>
 			<File
