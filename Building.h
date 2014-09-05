@@ -4,14 +4,16 @@
 class Building:public Drawable
 {
 private:
-	//Point center;
 	double size;
 	int type;
-	GLuint texName;
 	void model1(double w, double h);
-	void loadTexture();
+
+	double length;
+	double width;
+	double height;
 public:
 	Building(Point center,double size, int type);
+	Building(Point center,double l, double w,double h);
 	void Draw();
 	~Building(void);
 };

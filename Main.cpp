@@ -17,7 +17,7 @@ void initGL() {
    glEnable(GL_TEXTURE_2D);
    glEnable(GL_BLEND);
    glShadeModel(GL_SMOOTH);   // Enable smooth shading
-   glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Nice perspective corrections
+   glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Nice perspective corrections 
 }
 
 void display(void)
@@ -35,7 +35,7 @@ void display(void)
 	//_____________________
 
 	glBegin(GL_QUADS);        
-	 glColor3f(1.0f, 1.0f, 1.0f);     // Green
+	 glColor3f(1.0f, 1.0f, 1.0f);     //the ground
 	  glVertex3f( -100., 0., -100.);
 	  glVertex3f(-100.,0.,100.);
 	  glVertex3f(100.,0.,100.);
@@ -54,7 +54,8 @@ void display(void)
 	build1.Draw();
 	//glTranslatef(3.f, 0.0f, 0.0f);
 	
-
+	Building build2=Building(Point(5.2,0.,2.2),3,2);
+	build2.Draw();
 
 	//glTranslatef(3.f, 0.0f, 0.0f);
 	glutSwapBuffers();  // Swap the front and qback frame buffers (double buffering)

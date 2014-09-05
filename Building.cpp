@@ -1,106 +1,108 @@
 #include "Tools.h"
 #include "Building.h"
-
-
+#include "Texture.h"
 
 Building::Building(Point center,double size, int type)
 :Drawable(center),size(size),type(type)
 {
-	loadTexture();
 }
-void Building::loadTexture() 
+
+Building::Building(Point center,double l, double w, double h)
+:Drawable(center),length(l),width(w),height(h)
 {
-	double width, height;
-	char* buffer = Tools::esLoadTGA("Texture/5.tga", &width, &height);
-   glGenTextures(1, &texName);
-   glBindTexture(GL_TEXTURE_2D, texName);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, buffer);
-   free(buffer);
 }
 void Building::Draw() 
 {
 	switch(this->type) {
 		case 1:
 			{
-				double w=0.25,h=0.45; 
+				double w=0.25,h=3.1; 
 				model1(w,h);
+				break;
 			} 
 		case 2:
 			{
-				double w=0.25,h=0.25; 
+				double w=0.25,h=3.25; 
 				model1(w,h);
+				break;
 			} 
 		case 3:
 			{
 				double w=0.45,h=0.25; 
 
 				model1(w,h);
-				
+				break;
+
 			} 
 	}
 }
 void Building::model1(double w, double h) 
 {
+	Texture tex=Texture::GetInstance();
 	glEnable(GL_TEXTURE_2D);
-   glBindTexture(GL_TEXTURE_2D, texName);	
+	glBindTexture(GL_TEXTURE_2D, tex.wallTex1);	
 	glPushMatrix();
 	glTranslatef(this->center.x, this->center.y+h*size, this->center.z);
 	glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
-      // Top face (y = 1.0f)
-      // Define vertices in counter-clockwise (CCW) order with normal pointing out
-      glColor3f(0.0f, 1.0f, 0.0f);     // Green
-	  glVertex3f( w*size, h*size, -w*size);
-	  glVertex3f( -w*size, h*size, -w*size);
-	  glVertex3f( -w*size, h*size, w*size);
-	  glVertex3f( w*size, h*size, w*size);
- 
-      // Bottom face (y = -1.0f)
-      glColor3f(1.0f, 0.5f, 0.0f);     // Orange
-	  glVertex3f( w*size, -h*size, w*size);
-	  glVertex3f( -w*size, -h*size, w*size);
-	  glVertex3f( -w*size, -h*size, -w*size);
-	  glVertex3f( w*size, -h*size, -w*size);
-     
- 
-      // Front face  (z = 1.0f)
-     // glColor3f(1.0f, 0.0f, 0.0f);     // Red
-	  glTexCoord2f(0.0, 0.0); glVertex3f( w*size, h*size, w*size);
-	  glTexCoord2f(0.0, 5.0); glVertex3f( -w*size, h*size, w*size);
-	  glTexCoord2f(5.0, 5.0); glVertex3f( -w*size, -h*size, w*size);
-	  glTexCoord2f(5.0, 0.0); glVertex3f( w*size, -h*size, w*size);
- 
-      // Back face (z = -1.0f)
-      glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
-	  glVertex3f( w*size, -h*size, -w*size);
-	  glVertex3f( -w*size, -h*size, -w*size);
-	  glVertex3f( -w*size, h*size, -w*size);
-	  glVertex3f(w*size, h*size, -w*size);
+	{
+		// Top face (y = 1.0f)
+		// Define vertices in counter-clockwise (CCW) order with normal pointing out
+		glVertex3f( w*size, h*size, -w*size);
+		glVertex3f( -w*size, h*size, -w*size);
+		glVertex3f( -w*size, h*size, w*size);
+		glVertex3f( w*size, h*size, w*size);
+	}
+	glEnd();
+	glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
+	{
+		// Bottom face (y = -1.0f)
+		glVertex3f( w*size, -h*size, w*size);
+		glVertex3f( -w*size, -h*size, w*size);
+		glVertex3f( -w*size, -h*size, -w*size);
+		glVertex3f( w*size, -h*size, -w*size);
+	}
+	glEnd();
+	glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
+	{
+		// Front face  (z = 1.0f)
+		glTexCoord2f(2.0, 2.0); glVertex3f( w*size, h*size, w*size);
+		glTexCoord2f(0.0, 2.0); glVertex3f( -w*size, h*size, w*size);
+		glTexCoord2f(0.0, 0.0); glVertex3f( -w*size, -h*size, w*size);
+		glTexCoord2f(2.0, 0.0); glVertex3f( w*size, -h*size, w*size);
+	}
+	glEnd();
+	glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
+	{
+		// Right face (x = 1.0f)
+		glTexCoord2f(0.0, 2.0); glVertex3f( w*size, h*size, -w*size);
+		glTexCoord2f(2.0, 2.0); glVertex3f( w*size, h*size, w*size);
+		glTexCoord2f(2.0, 0.0); glVertex3f( w*size, -h*size, w*size);
+		glTexCoord2f(0.0, 0.0); glVertex3f( w*size, -h*size, -w*size);
+	}
+	glEnd();
+	glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
+	{
+		// Left face (x = -1.0f)
+		glTexCoord2f(0.0, 2.0); glVertex3f( -w*size, h*size, w*size);
+		glTexCoord2f(2.0, 2.0); glVertex3f( -w*size, h*size, -w*size);
+		glTexCoord2f(2.0, 0.0); glVertex3f( -w*size, -h*size, -w*size);
+		glTexCoord2f(0.0, 0.0); glVertex3f( -w*size, -h*size, w*size);
+	}
+	glEnd();
 
- 
-      // Left face (x = -1.0f)
-      glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-
-	  glVertex3f( -w*size, h*size, w*size);
-	  glVertex3f( -w*size, h*size, -w*size);
-	  glVertex3f( -w*size, -h*size, -w*size);
-	  glVertex3f( -w*size, -h*size, w*size);
-    
- 
-      // Right face (x = 1.0f)
-      glColor3f(1.0f, 0.0f, 1.0f);     // Magenta
-	  glVertex3f( w*size, h*size, -w*size);
-	  glVertex3f( w*size, h*size, w*size);
-	  glVertex3f( w*size, -h*size, w*size);
-	  glVertex3f( w*size, -h*size, -w*size);
-   glEnd();  // End of drawing color-cube
-   glPopMatrix();
-   glDisable(GL_TEXTURE_2D); 
+	glBindTexture(GL_TEXTURE_2D, tex.wallTex2);
+	glBegin(GL_QUADS);
+	{
+		// Back face (z = -1.0f)
+		glTexCoord2f(2.0, 0.0); glVertex3f( w*size, -h*size, -w*size);
+		glTexCoord2f(0.0, 0.0); glVertex3f( -w*size, -h*size, -w*size);
+		glTexCoord2f(0.0, 2.0); glVertex3f( -w*size, h*size, -w*size);
+		glTexCoord2f(2.0, 2.0); glVertex3f(w*size, h*size, -w*size);
+	}
+	glEnd();  // End of drawing color-cube
+	glPopMatrix();
+	glDisable(GL_TEXTURE_2D); 
 }
-
 
 Building::~Building(void)
 {
