@@ -8,14 +8,20 @@ Map::Map(char* fileName)
 		throw "Cannot load map!";
 	}
 	this->center.x=nodes[ROOTPOINT].getCenter().x;
-	this->center.x=nodes[ROOTPOINT].getCenter().y;
-	this->center.x=nodes[ROOTPOINT].getCenter().z;
+	this->center.y=nodes[ROOTPOINT].getCenter().y;
+	this->center.z=nodes[ROOTPOINT].getCenter().z;
+	translateToCenter();
+}
+
+void Map::translateToCenter()
+{
+	for (std::map<int, Node>::iterator it = this->nodes.begin(); it != this->nodes.end(); ++it)
+	{
+		(*it).second.Translate(-center.x, -center.y, -center.z);
+	}
 }
 Map::Map()
 {
-	this->center.x=nodes[ROOTPOINT].getCenter().x;
-	this->center.x=nodes[ROOTPOINT].getCenter().y;
-	this->center.x=nodes[ROOTPOINT].getCenter().z;
 }
 void Map::getIntersection(Node first, Node second, Point &firstPoint, Point &secondPoint)
 {

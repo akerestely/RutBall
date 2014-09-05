@@ -7,6 +7,7 @@ class Map: public Drawable
 {
 	std::map<int, Node> nodes;
 	void getIntersection(Node first, Node second, Point &firstPoint, Point &secondPoint);
+	void translateToCenter();
 public:
 	Map(char* fileName);
 	Map();

@@ -12,5 +12,6 @@ public:
 	Node(int id, Point center);
 	std::vector<int>& getDestinations();
 	Point getCenter();
+	void Translate(double dx, double dy, double dz);
 	void Draw() override;
 };

@@ -51,3 +51,10 @@ std::vector<int>& Node::getDestinations()
 {
 	return destinations;
 }
+
+void Node::Translate(double dx, double dy, double dz)
+{
+	this->center.x += dx;
+	this->center.y += dy;
+	this->center.z += dz;
+}
