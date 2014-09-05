@@ -7,10 +7,15 @@ Map::Map(char* fileName)
 	{
 		throw "Cannot load map!";
 	}
+	this->center.x=nodes[ROOTPOINT].getCenter().x;
+	this->center.x=nodes[ROOTPOINT].getCenter().y;
+	this->center.x=nodes[ROOTPOINT].getCenter().z;
 }
 Map::Map()
 {
-
+	this->center.x=nodes[ROOTPOINT].getCenter().x;
+	this->center.x=nodes[ROOTPOINT].getCenter().y;
+	this->center.x=nodes[ROOTPOINT].getCenter().z;
 }
 void Map::getIntersection(Node first, Node second, Point &firstPoint, Point &secondPoint)
 {
@@ -66,7 +71,7 @@ void Map::Draw()
 	Point first,second;
 	for (std::map<int, Node>::iterator it = this->nodes.begin(); it != this->nodes.end(); ++it)
 	{
-	
+
 		Node currentNode = (*it).second;
 		std::vector<int> destinations=currentNode.getDestinations();
 		currentNode.Draw();
@@ -81,7 +86,7 @@ void Map::Draw()
 			glVertex3d(first.x, first.y, first.z);
 			glEnd();
 		}
-		
+
 	}
 	glPopMatrix();
 }

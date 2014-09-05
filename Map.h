@@ -2,6 +2,7 @@
 #include "Node.h"
 #include "map"
 #include "Tools.h"
+#define ROOTPOINT 5
 class Map: public Drawable
 {
 	std::map<int, Node> nodes;
