@@ -7,11 +7,11 @@ Camera::Camera()
 }
 void Camera::MoveX(double dx)
 {
-	this->dx+=dx;
+	this->dx-=dx;
 }
 void Camera::MoveZ(double dz)
 {
-	this->dz+=dz;
+	this->dz-=dz;
 }
 void Camera::RotateY(double ry)
 {
@@ -19,6 +19,7 @@ void Camera::RotateY(double ry)
 }
 void Camera::Render()
 {
-	glTranslatef(dx,0,dz);
 	glRotatef(ry,0,1,0);
+	
+	glTranslatef(dx,0,dz);
 }

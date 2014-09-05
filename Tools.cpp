@@ -72,3 +72,61 @@ int Tools::ReadNodesFromXML(char *fileName, std::map<int,Node>& nodes)
 Tools::~Tools(void)
 {
 }
+
+
+typedef struct
+{
+        unsigned char IdSize,
+                MapType,
+                ImageType;
+        unsigned short PaletteStart,
+                PaletteSize;
+        unsigned char PaletteEntryDepth;
+        unsigned short X,
+                Y,
+                Width,
+                Height;
+        unsigned char ColorDepth,
+                Descriptor;
+
+} TGA_HEADER;
+
+char*  Tools::esLoadTGA ( char *fileName, int *width, int *height )
+{
+   char *buffer = NULL;
+   FILE *f;
+   unsigned char tgaheader[12];
+   unsigned char attributes[6];
+   unsigned int imagesize;
+   f = fopen(fileName, "rb");
+   if(f == NULL) return NULL;
+   if(fread(&tgaheader, sizeof(tgaheader), 1, f) == 0)
+   {
+       fclose(f);
+       return NULL;
+   }
+
+   if(fread(attributes, sizeof(attributes), 1, f) == 0)
+   {
+       fclose(f);
+       return 0;
+   }
+
+   *width = attributes[1] * 256 + attributes[0];
+   *height = attributes[3] * 256 + attributes[2];
+   imagesize = attributes[4] / 8 * *width * *height;
+   buffer =(char*) malloc(imagesize);
+   if (buffer == NULL)
+   {
+       fclose(f);
+       return 0;
+   }
+
+   if(fread(buffer, 1, imagesize, f) != imagesize)
+   {
+       free(buffer);
+       return NULL;
+   }
+   fclose(f);
+   return buffer;
+}

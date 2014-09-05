@@ -6,15 +6,17 @@
 #include "CameraSpectator.h"
 #include "Tools.h"
 #include "vector"
-#include<map>
 #include "Map.h"
 #include "Building.h"
+#include "Ball.h"
 
 CCamera cam;
 Map brasovMap;
+Ball *ball;
+bool up,down,left,right,rotLeft,rotRight, jump;
+
 
 void initGL() {
-
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
 	glClearDepth(1.0f);                   // Set background depth to farthest
 	glEnable(GL_DEPTH_TEST);   // Enable depth testing for z-culling
@@ -31,35 +33,68 @@ void initGL() {
 	{
 		throw message;
 	}
+	ball=new Ball(1,Point(0,0,0));
 }
 
 void display(void)
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-	glMatrixMode(GL_MODELVIEW);     // To operate on model-view matrix
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL); 
+   glMatrixMode(GL_MODELVIEW);     // To operate on model-view matrix
+   
+   glLoadIdentity();                 // Reset the model-view matrix
 
-	// Render a color-cube consisting of 6 quads with different colors
-	glLoadIdentity();                 // Reset the model-view matrix
+   //glTranslatef(0.0f, -1.5f, -7.0f);
+   glTranslatef(0.0f, -1.0f, -10.0f);  // Move right and into the screen 
+   glRotatef(30.,1,0,0);
 
-	glTranslatef(0.0f, -1.5f, -7.0f);  // Move right and into the screen 
-	//glTranslatef(-88.4f, -54.5f, 16.8f);
-	//glRotatef(-85,1,0,0);
-	cam.Render();
-	brasovMap.Draw();
+   ball->Draw();
+   cam.Render();
+   brasovMap.Draw();
 
 	Building build1=Building(Point(1.35,0.,1.3),2,2);
 	build1.Draw();	
 	Building build2=Building(Point(5.2,0.,2.2),3,2);
 	build2.Draw();
 
-	glutSwapBuffers();  // Swap the front and qback frame buffers (double buffering)
+    glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
 }
 
 void timer(int value) 
 {
 	glutPostRedisplay();
 	glutTimerFunc(15, timer, 0);
+	if(jump)
+		ball->Jump(jump);
+	if(left)
+	{
+		cam.MoveX(-0.2); 
+		ball->MoveX(-0.2);
+	}
+	if(right)
+	{
+		cam.MoveX(0.2); 
+		ball->MoveX(0.2);
+	}
+	if(up)
+	{
+		cam.MoveZ(-0.2); 
+		ball->MoveZ(0.2);
+	}
+	if(down)
+	{
+		cam.MoveZ(0.2);
+		ball->MoveZ(-0.2);
+	}
+	if(rotLeft)
+	{
+		cam.RotateY(5);
+	}
+	if(rotRight)
+	{
+		cam.RotateY(-5);
+	}
+	
 }
 
 void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integer
@@ -77,24 +112,44 @@ void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integ
 	gluPerspective(45.0f, aspect, 0.1f, 300.0f);
 }
 
-void keyboard (unsigned char key, int x, int y)
+void keyboardPressed (unsigned char key, int x, int y)
 {
-	switch (key) {
-	  case 'w':cam.RotateX(-5);break;
-	  case 's':cam.RotateX(5);break;
-	  case 'a':cam.RotateY(-5);break;
-	  case 'd':cam.RotateY(5);break;
+	switch (key) 
+	{
+		//  case 'w':cam.RotateX(-5);break;
+		//  case 's':cam.RotateX(5);break;
+	case 'a':rotLeft=true; break;
+	case 'd':rotRight=true; break;
+	case ' ':jump=true; break;
+	}
+}
+void keyboardReleased (unsigned char key, int x, int y)
+{
+	switch (key) 
+	{
+	case 'a':rotLeft=false; break;
+	case 'd':rotRight=false; break;
 	}
 }
 
-void handleSpecialKeypress(int key, int x, int y)
+void handleSpecialKeyPressed(int key, int x, int y)
 {
-	switch (key)
+	switch (key) 
 	{
-	case GLUT_KEY_LEFT:  cam.MoveX(-0.3);  break;
-	case GLUT_KEY_RIGHT: cam.MoveX(0.3); break;
-	case GLUT_KEY_UP:    cam.MoveZ(-0.2);  break;
-	case GLUT_KEY_DOWN:  cam.MoveZ(0.2); break; 
+	case GLUT_KEY_LEFT:left = true; break;
+	case GLUT_KEY_RIGHT:right = true; break;
+	case GLUT_KEY_UP:up = true; break;
+	case GLUT_KEY_DOWN:down = true; break;
+	}
+}
+void handleSpecialKeyReleased(int key, int x, int y) 
+{
+	switch (key) 
+	{
+	case GLUT_KEY_LEFT:left = false; break;
+	case GLUT_KEY_RIGHT:right = false; break;
+	case GLUT_KEY_UP:up = false; break;
+	case GLUT_KEY_DOWN:down = false; break;
 	}
 }
 int main(int argc, char** argv) 
@@ -109,8 +164,10 @@ int main(int argc, char** argv)
 		glutDisplayFunc(display);       // Register callback handler for window re-paint event
 		glutReshapeFunc(reshape);       // Register callback handler for window re-size event
 		initGL();                       // Our own OpenGL initialization
-		glutKeyboardFunc(keyboard);
-		glutSpecialFunc(handleSpecialKeypress);
+		glutKeyboardFunc(keyboardPressed);
+   		glutKeyboardUpFunc(keyboardReleased);
+  		glutSpecialFunc(handleSpecialKeyPressed);
+   		glutSpecialUpFunc(handleSpecialKeyReleased);
 		glutTimerFunc(0, timer, 0);     // First timer call immediately [NEW]
 		glutMainLoop();                 // Enter the infinite event-processing loop
 	}

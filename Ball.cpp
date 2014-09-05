@@ -1,16 +1,18 @@
 #include "Ball.h"
 #include "windows.h"
 
+
 Ball::~Ball(void)
 {
 }
 
 Ball::Ball(float radius, Point center)
 	: Drawable(center)
-{
+{			
 	        this->oldY=center.y;
-			this->isUp=false;
-			alphaX=0, alphaY=0, alphaZ=0;
+			this->boolX=false;
+			this->boolZ=false;
+			alphaX=0, rotY=0, alphaZ=0;
 			float const R = 1./(float)(rings-1);
 			float const S = 1./(float)(sectors-1);
 			int r, s;
@@ -48,15 +50,28 @@ Ball::Ball(float radius, Point center)
 					*i++ = (r+1) * sectors + (s+1);
 					*i++ = (r+1) * sectors + s;
 			}
+			textureBall();
+			canJump=true;
+
 }
 void Ball::Draw()
 {
         glMatrixMode(GL_MODELVIEW);
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, texName);
         glPushMatrix();
 		glTranslatef(this->center.x, this->center.y, this->center.z);
-		glRotatef(alphaX, 1.0f, 0.0f, 0.0f);
-		glRotatef(alphaY, 0.0f, 1.0f, 0.0f);
-		glRotatef(alphaZ, 0.0f, 0.0f, 1.0f);
+
+		if(this->boolZ==true)
+		{
+			glRotatef(alphaZ, 0.0f, 0.0f, 1.0f);
+			glRotatef(alphaX, 1.0f, 0.0f, 0.0f);
+		}
+		if(this->boolX==true)
+		{
+			glRotatef(alphaX, 1.0f, 0.0f, 0.0f);
+			glRotatef(alphaZ, 0.0f, 0.0f, 1.0f);
+		}
 
         glEnableClientState(GL_VERTEX_ARRAY);
         glEnableClientState(GL_NORMAL_ARRAY);
@@ -66,66 +81,60 @@ void Ball::Draw()
         glTexCoordPointer(2, GL_FLOAT, 0, &texcoords[0]);
         glDrawElements(GL_QUADS, indices.size(), GL_UNSIGNED_SHORT, &indices[0]);
         glPopMatrix();
-}
 
-bool Ball::IsCollision()
-{
-	return false;
+		glDisable(GL_TEXTURE_2D);
 }
 
 void Ball::MoveX(double dx)
 {
-	if(!this->IsCollision())
-	{
-		center.x+=dx;
+		boolZ=true;
+		boolX=false;
 		if(dx>0)
 			alphaZ-=10;
 		else
 			alphaZ+=10;
-	}
 }
 
 void Ball::MoveZ(double dz)
 {
-	if(!this->IsCollision())
-	{
-		center.z-=dz;
+		boolX=true;
+		boolZ=false;
 		if(dz>0)
 			alphaX-=10;
 		else
 			alphaX+=10;
-	}
 }
 
-void Ball::RotateY(double sy)
+void Ball::Jump(bool &isJump)
 {
-	if(!this->IsCollision())
-			alphaY+=sy;
+	if(canJump)
+	{
+		canJump=false;
+		energy=POWER;
+	}
+	center.y+=energy;
+	if(center.y<=0)
+	{
+		center.y=0;
+		canJump=true;
+		isJump = false;
+	}
+	else
+	{
+		energy-=GRAVITY;
+	}
 }
 
-
-void Ball::Jump(double dy){
-	if(!this->IsCollision())
-	{
-		if(!isUp)
-		{
-			isUp=true;
-			oldY=center.y;
-			center.y+=dy;
-			Jump(-0.002);
-		}
-		else
-		{
-			if(center.y>oldY)
-			{
-			   center.y-=0.002;
-			   Jump(-0.002);
-			}
-		   if(center.y == oldY)
-			   {
-				   isUp=false;
-			   }
-		}
-	}
+void Ball::textureBall()
+{	
+	 int width,height;
+	 char* buffer = Tools::esLoadTGA("Texture/football.tga",&width,&height);
+	 glGenTextures ( 1, &texName);
+	 glBindTexture ( GL_TEXTURE_2D, texName);
+	 glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	 glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP); 
+	 glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, width, height, 0,  GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer ); 
+	 free ( buffer );
 
 }

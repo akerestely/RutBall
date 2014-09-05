@@ -4,7 +4,11 @@
 #include "Point.h"
 #include "math.h"
 #include "Drawable.h"
+#include "Tools.h"
+#include "glut.h"
 
+#define POWER 0.5
+#define GRAVITY 0.05
 class Ball : public Drawable
 {
 private:
@@ -14,15 +18,18 @@ private:
     std::vector<GLushort> indices;
 	static const int rings=50;
 	static const int sectors=100;
-	bool isUp;
-	double oldY, alphaX, alphaY, alphaZ;
+	bool boolX, boolZ;
+	bool canJump;
+	double energy;
+	double oldY, alphaX, alphaZ, rotY;
+	GLuint texName;
+
+	void textureBall();
 public:
 	~Ball(void);
 	Ball(float radius, Point center);
 	void Draw();
-	bool IsCollision();
 	void MoveX(double dx);
 	void MoveZ(double dz);
-	void RotateY(double sy);
-	void Jump(double dy);
+	void Jump(bool &isJump);
 };
