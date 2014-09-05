@@ -2,8 +2,7 @@
 #include "Drawable.h"
 #include<vector>
 
-#define WIDTH 0.05
-#define SCALLING 100
+#define SCALLING 900
 class Node:public Drawable
 {
 	int id;
@@ -13,5 +12,6 @@ public:
 	Node(int id, Point center);
 	std::vector<int>& getDestinations();
 	Point getCenter();
+	double GetRadius();
 	void Draw() override;
 };

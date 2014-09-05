@@ -6,8 +6,10 @@
 #include "Tools.h"
 #include "vector"
 #include<map>
+#include "Map.h"
 CCamera cam;
 std::map<int,Node> nodes;
+Map brasovMap;
 void initGL() {
    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
    glClearDepth(1.0f);                   // Set background depth to farthest
@@ -25,13 +27,12 @@ void display(void)
    // Render a color-cube consisting of 6 quads with different colors
    glLoadIdentity();                 // Reset the model-view matrix
    
-   glTranslatef(0.0f, -0.5f, -7.0f);  // Move right and into the screen 
+   glTranslatef(0.0f, -1.5f, -7.0f);  // Move right and into the screen 
+   //glTranslatef(-88.4f, -54.5f, 16.8f);
+   //glRotatef(-85,1,0,0);
    cam.Render();
    glRotatef(180, 0, 1, 0); 
-   for (int i = 0; i < nodes.size(); i++)
-   {
-	   nodes[i].Draw();
-   }	
+   brasovMap.Draw();
    glRotatef(-180, 0, 1, 0);
    glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
 }
@@ -54,7 +55,7 @@ void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integ
    glMatrixMode(GL_PROJECTION);  // To operate on the Projection matrix
    glLoadIdentity();             // Reset
    // Enable perspective projection with fovy, aspect, zNear and zFar
-   gluPerspective(45.0f, aspect, 0.1f, 100.0f);
+   gluPerspective(45.0f, aspect, 0.1f, 300.0f);
 }
 
 void keyboard (unsigned char key, int x, int y)
@@ -83,6 +84,7 @@ int main(int argc, char** argv) {
 	{
 		return 0;
 	}
+	brasovMap = Map(nodes);
    glutInit(&argc, argv);            // Initialize GLUT
    glutInitDisplayMode(GLUT_DOUBLE); // Enable double buffered mode
    glutInitWindowSize(640, 480);   // Set the window's initial width & height

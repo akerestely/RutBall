@@ -191,6 +191,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Map.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Node.cpp"
 				>
 			</File>
@@ -222,6 +226,10 @@
 			</File>
 			<File
 				RelativePath=".\Drawable.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Map.h"
 				>
 			</File>
 			<File
