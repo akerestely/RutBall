@@ -54,10 +54,12 @@ void display(void)
    cam.Render();
    brasovMap.Draw();
 
-	Building build1=Building(Point(1.35,0.,1.3),2,2);
+	Building build1=Building(Point(1.35,0.,1.3),8,2);
 	build1.Draw();	
-	Building build2=Building(Point(5.2,0.,2.2),3,2);
+	Building build2=Building(Point(5.2,0.,2.2),8,2);
 	build2.Draw();
+	Building build3=Building(Point(20.2,0.,18.2),20,3);
+	build3.Draw();
 
     glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
 }
