@@ -29,15 +29,16 @@ void AddF3dVectorToVector ( SF3dVector * Dst, SF3dVector * V2)
 CCamera::CCamera()
 {
 	//Init with standard OGL values:
-	Position = F3dVector (	0.0, 
-							0.0,
-							0.0);
+	Position = F3dVector (	300.0, 
+							90.0,
+							-16.0);
 	ViewDir = F3dVector(	0.0,
 							0.0,
 							-1.0);
 	ViewDirChanged = false;
 	//Only to be sure:
 	RotatedX = RotatedY = RotatedZ = 0.0;
+	RotatedX=-90;
 }
 
 void CCamera::GetViewDir( void )
