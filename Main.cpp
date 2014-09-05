@@ -7,80 +7,37 @@
 #include "vector"
 #include "Ball.h"
 CCamera cam;
-Ball ball(1, Point(0,0,0));
+Ball *ball;
 
 std::vector<Node> nodes;
 bool up,down,left,right,rotLeft,rotRight, jump;
 
-#define checkImageWidth 64
-#define checkImageHeight 64
-static GLubyte checkImage[checkImageHeight][checkImageWidth][4];
-
-static GLuint texName;
-
-void makeCheckImage(void)
-{
-   int i, j, c;
-    
-   for (i = 0; i < checkImageHeight; i++) {
-      for (j = 0; j < checkImageWidth; j++) {
-         c = ((((i&0x8)==0)^((j&0x8))==0))*255;
-         checkImage[i][j][0] = (GLubyte) 255;
-         checkImage[i][j][1] = (GLubyte) 255;
-         checkImage[i][j][2] = (GLubyte) c;
-         checkImage[i][j][3] = (GLubyte) 255;
-      }
-   }
-}
 
 void initGL() {
-   glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
-
-   //////////////////test//texture///////////////////////////
-   glShadeModel(GL_FLAT);
-   glEnable(GL_DEPTH_TEST);
-
-   makeCheckImage();
-   glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-   glGenTextures(1, &texName);
-   glBindTexture(GL_TEXTURE_2D, texName);
-
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, 
-                   GL_NEAREST);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, 
-                   GL_NEAREST);
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, checkImageWidth, 
-                checkImageHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, 
-                checkImage);
-   //////////////////////////////////////////////////////////////
-   glClearDepth(1.0f);                   // Set background depth to farthest
-   glEnable(GL_DEPTH_TEST);   // Enable depth testing for z-culling
-   glDepthFunc(GL_LEQUAL);    // Set the type of depth-test
-   glShadeModel(GL_SMOOTH);   // Enable smooth shading
-   glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Nice perspective corrections
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
+	glClearDepth(1.0f);                   // Set background depth to farthest
+	glEnable(GL_DEPTH_TEST);   // Enable depth testing for z-culling   
+	glDepthFunc(GL_LEQUAL);    // Set the type of depth-test
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_BLEND);
+	glShadeModel(GL_SMOOTH);   // Enable smooth shading
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Nice perspective corrections
+	ball=new Ball(1,Point(0,0,0));
 }
 
 void display(void)
 {
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL); 
    glMatrixMode(GL_MODELVIEW);     // To operate on model-view matrix
-   /////////////////texture//////////////////////////////////
-   glEnable(GL_TEXTURE_2D);
-   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-   glBindTexture(GL_TEXTURE_2D, texName);
-   // Render a color-cube consisting of 6 quads with different colors
-   glLoadIdentity();                 // Reset the model-view matrix
    
+   glLoadIdentity();                 // Reset the model-view matrix
+
    glTranslatef(0.0f, -1.0f, -10.0f);  // Move right and into the screen 
    glRotatef(30.,1,0,0);
 
-   ball.Draw();
+   ball->Draw();
    cam.Render();
-   //ball.Draw();
-   glDisable(GL_TEXTURE_2D);
 
    //glRotatef(180, 0, 1, 0); 
    //for (int i = 0; i < nodes.size(); i++)
@@ -123,7 +80,8 @@ void display(void)
 	glVertex3f(-1.0f,-1.0f, 1.0f);
 	glEnd();   // Done drawing the pyramid
 
-   glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
+    glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
+  //  glFlush();
 }
 
 void timer(int value) 
@@ -133,35 +91,35 @@ void timer(int value)
 	if(left)
 	{
 		cam.MoveX(-0.2); 
-		ball.MoveX(-0.2);
+		ball->MoveX(-0.2);
 	}
 	if(right)
 	{
 		cam.MoveX(0.2); 
-		ball.MoveX(0.2);
+		ball->MoveX(0.2);
 	}
 	if(up)
 	{
 		cam.MoveZ(-0.2); 
-		ball.MoveZ(0.2);
+		ball->MoveZ(0.2);
 	}
 	if(down)
 	{
 		cam.MoveZ(0.2);
-		ball.MoveZ(-0.2);
+		ball->MoveZ(-0.2);
 	}
 	if(rotLeft)
 	{
 		cam.RotateY(5);
-		ball.RotateY(-5);
+		ball->RotateY(-5);
 	}
 	if(rotRight)
 	{
 		cam.RotateY(-5);
-		ball.RotateY(5);
+		ball->RotateY(5);
 	}
 	if(jump)
-		ball.Jump(1);
+		ball->Jump(1);
 }
 
 void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integer

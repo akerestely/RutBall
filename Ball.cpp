@@ -1,13 +1,15 @@
 #include "Ball.h"
 #include "windows.h"
 
+
 Ball::~Ball(void)
 {
 }
 
 Ball::Ball(float radius, Point center)
 	: Drawable(center)
-{
+{			
+			
 	        this->oldY=center.y;
 			this->isUp=false;
 			this->boolX=false;
@@ -50,13 +52,17 @@ Ball::Ball(float radius, Point center)
 					*i++ = (r+1) * sectors + (s+1);
 					*i++ = (r+1) * sectors + s;
 			}
+			textureBall();
+
 }
 void Ball::Draw()
 {
         glMatrixMode(GL_MODELVIEW);
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, texName);
         glPushMatrix();
-		//glRotatef(rotY, 0.0f, 1.0f, 0.0f);
 		glTranslatef(this->center.x, this->center.y, this->center.z);
+
 		if(this->boolZ==true)
 		{
 			glRotatef(alphaZ, 0.0f, 0.0f, 1.0f);
@@ -76,6 +82,8 @@ void Ball::Draw()
         glTexCoordPointer(2, GL_FLOAT, 0, &texcoords[0]);
         glDrawElements(GL_QUADS, indices.size(), GL_UNSIGNED_SHORT, &indices[0]);
         glPopMatrix();
+
+		glDisable(GL_TEXTURE_2D);
 }
 
 bool Ball::IsCollision()
@@ -141,5 +149,19 @@ void Ball::Jump(double dy){
 			   }
 		}
 	}
+
+}
+
+void Ball::textureBall(){
+	
+	 int width,height;
+	 char* buffer = Tools::esLoadTGA("Texture/football.tga",&width,&height);
+	 glGenTextures ( 1, &texName);
+	 glBindTexture ( GL_TEXTURE_2D, texName);
+	 glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	 glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP); 
+	 glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, width, height, 0,  GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer ); 
+	 free ( buffer );
 
 }

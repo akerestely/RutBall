@@ -4,6 +4,8 @@
 #include "Point.h"
 #include "math.h"
 #include "Drawable.h"
+#include "Tools.h"
+#include "glut.h"
 
 class Ball : public Drawable
 {
@@ -16,6 +18,9 @@ private:
 	static const int sectors=100;
 	bool isUp, boolX, boolZ;
 	double oldY, alphaX, alphaZ, rotY;
+	GLuint texName;
+
+	void textureBall();
 public:
 	~Ball(void);
 	Ball(float radius, Point center);

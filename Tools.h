@@ -8,4 +8,5 @@ public:
 	Tools(void);
 	static int ReadNodesFromXML(char *fileName, std::vector<Node> &nodes);
 	~Tools(void);
+	static char*  esLoadTGA ( char *fileName, int *width, int *height );
 };

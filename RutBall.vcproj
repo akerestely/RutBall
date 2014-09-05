@@ -247,6 +247,10 @@
 			RelativePath=".\Map.xml"
 			>
 		</File>
+		<File
+			RelativePath=".\Untitled.tga"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
