@@ -5,10 +5,10 @@
 class Map: public Drawable
 {
 	std::map<int, Node> nodes;
-	void GetIntersection(Node first, Node second, Point &firstPoint, Point &secondPoint);
+	void getIntersection(Node first, Node second, Point &firstPoint, Point &secondPoint);
 public:
 	Map(std::map<int, Node> nodes);
 	Map();
 	void Draw() override;
-
+	CircleLineIntersection BallCollision(int nodeKey, Point ballCenter);
 };

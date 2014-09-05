@@ -9,15 +9,16 @@ Map::Map()
 {
 
 }
-void Map::GetIntersection(Node first, Node second, Point &firstPoint, Point &secondPoint)
+void Map::getIntersection(Node first, Node second, Point &firstPoint, Point &secondPoint)
 {
 	Point firstCenter = first.getCenter();
 	Point secondCenter = second.getCenter();
-	double radius = first.GetRadius();
+	double radius = WIDTH / 2;
 	double m;
 	if (secondCenter.z == firstCenter.z)
 		m = 0;
-	m = (firstCenter.x - secondCenter.x) / (secondCenter.z - firstCenter.z);
+	else
+		m = (firstCenter.x - secondCenter.x) / (secondCenter.z - firstCenter.z);
 	double alpha = -2 * firstCenter.x;
 	double beta = firstCenter.x * firstCenter.x - radius * radius / (1 + m * m);
 	double delta = alpha * alpha - 4 * beta;
@@ -34,6 +35,27 @@ void Map::GetIntersection(Node first, Node second, Point &firstPoint, Point &sec
 	firstPoint.y = firstCenter.y;
 	secondPoint.y = firstCenter.y;
 }
+
+CircleLineIntersection Map::BallCollision(int nodeKey, Point ballCenter)
+{
+	Point lastNodePosition = nodes[nodeKey].getCenter();
+	double radius = WIDTH / 4;
+	double m;
+	if (lastNodePosition.z == ballCenter.z)
+		m = 0;
+	else
+		m = (ballCenter.x - lastNodePosition.x) / (lastNodePosition.z - ballCenter.z);
+	double alpha = -2 * ballCenter.x;
+	double beta = ballCenter.x * ballCenter.x - radius * radius / (1 + m * m);
+	double delta = alpha * alpha - 4 * beta;
+	if (delta < 0)
+		return CircleLineIntersection::NoIntersection;
+	if (delta == 0)
+		return CircleLineIntersection::Tangent;
+	return CircleLineIntersection::Secant;
+
+}
+
 void Map::Draw()
 {
 	Point first,second;
@@ -46,17 +68,13 @@ void Map::Draw()
 		for (std::vector<int>::iterator vectorIt = destinations.begin(); vectorIt != destinations.end();++vectorIt)
 		{
 			glBegin(GL_QUADS);
-			GetIntersection(currentNode,nodes[*vectorIt],first,second);
+			getIntersection(currentNode,nodes[*vectorIt],first,second);
 			glVertex3d(first.x, first.y, first.z);
 			glVertex3d(second.x, second.y, second.z);
-			GetIntersection(nodes[*vectorIt], currentNode, first, second);
+			getIntersection(nodes[*vectorIt], currentNode, first, second);
 			glVertex3d(second.x, second.y, second.z);
 			glVertex3d(first.x, first.y, first.z);
 			glEnd();
-			/*glBegin(GL_LINES);
-			glVertex3d(currentNode.getCenter().x, currentNode.getCenter().y, currentNode.getCenter().z);
-			glVertex3d(nodes[*vectorIt].getCenter().x, nodes[*vectorIt].getCenter().y, nodes[*vectorIt].getCenter().z);
-			glEnd();*/
 		}
 		
 	}

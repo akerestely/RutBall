@@ -12,6 +12,5 @@ public:
 	Node(int id, Point center);
 	std::vector<int>& getDestinations();
 	Point getCenter();
-	double GetRadius();
 	void Draw() override;
 };
