@@ -9,9 +9,7 @@ Ball::~Ball(void)
 Ball::Ball(float radius, Point center)
 	: Drawable(center)
 {			
-			
 	        this->oldY=center.y;
-			this->isUp=false;
 			this->boolX=false;
 			this->boolZ=false;
 			alphaX=0, rotY=0, alphaZ=0;
@@ -53,6 +51,7 @@ Ball::Ball(float radius, Point center)
 					*i++ = (r+1) * sectors + s;
 			}
 			textureBall();
+			canJump=true;
 
 }
 void Ball::Draw()
@@ -86,74 +85,48 @@ void Ball::Draw()
 		glDisable(GL_TEXTURE_2D);
 }
 
-bool Ball::IsCollision()
-{
-	return false;
-}
-
 void Ball::MoveX(double dx)
 {
-	if(!this->IsCollision())
-	{
 		boolZ=true;
 		boolX=false;
 		if(dx>0)
 			alphaZ-=10;
 		else
 			alphaZ+=10;
-	
-	}
 }
 
 void Ball::MoveZ(double dz)
 {
-	if(!this->IsCollision())
-	{
 		boolX=true;
 		boolZ=false;
 		if(dz>0)
 			alphaX-=10;
 		else
 			alphaX+=10;
-	
-	}
 }
 
-void Ball::RotateY(double ry)
+void Ball::Jump(bool &isJump)
 {
-	if(!this->IsCollision())
-			rotY+=ry;
-}
-
-
-void Ball::Jump(double dy){
-	if(!this->IsCollision())
+	if(canJump)
 	{
-		if(!isUp)
-		{
-			isUp=true;
-			oldY=center.y;
-			center.y+=dy;
-			//Jump(dy);
-		}
-		else
-		{
-			if(center.y>oldY)
-			{
-			  center.y-=0.002;
-			  Jump(dy);
-			}
-		   if(center.y == oldY)
-			   {
-				   isUp=false;
-			   }
-		}
+		canJump=false;
+		energy=POWER;
 	}
-
+	center.y+=energy;
+	if(center.y<=0)
+	{
+		center.y=0;
+		canJump=true;
+		isJump = false;
+	}
+	else
+	{
+		energy-=GRAVITY;
+	}
 }
 
-void Ball::textureBall(){
-	
+void Ball::textureBall()
+{	
 	 int width,height;
 	 char* buffer = Tools::esLoadTGA("Texture/football.tga",&width,&height);
 	 glGenTextures ( 1, &texName);

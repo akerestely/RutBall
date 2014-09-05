@@ -88,6 +88,8 @@ void timer(int value)
 {
 	glutPostRedisplay();
 	glutTimerFunc(15, timer, 0);
+	if(jump)
+		ball->Jump(jump);
 	if(left)
 	{
 		cam.MoveX(-0.2); 
@@ -111,15 +113,12 @@ void timer(int value)
 	if(rotLeft)
 	{
 		cam.RotateY(5);
-		ball->RotateY(-5);
 	}
 	if(rotRight)
 	{
 		cam.RotateY(-5);
-		ball->RotateY(5);
 	}
-	if(jump)
-		ball->Jump(1);
+	
 }
 
 void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integer
@@ -154,7 +153,6 @@ void keyboardReleased (unsigned char key, int x, int y)
 	{
 	case 'a':rotLeft=false; break;
 	case 'd':rotRight=false; break;
-	case ' ':jump=false; break;
 	}
 }
 
