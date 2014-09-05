@@ -7,7 +7,7 @@ private:
 	//Point center;
 	double size;
 	int type;
-	GLuint wallTex;
+	GLuint texName;
 	void model1(double w, double h);
 	void loadTexture();
 public:

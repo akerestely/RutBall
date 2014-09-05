@@ -1,11 +1,11 @@
 #include <Windows.h>
-#include <glut.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "CameraSpectator.h"
 #include "Tools.h"
 #include "vector"
 #include "Building.h"
+#include <glut.h>
 CCamera cam;
 std::vector<Node> nodes;
 void initGL() {
@@ -23,8 +23,8 @@ void initGL() {
 void display(void)
 {
   	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glMatrixMode(GL_MODELVIEW);     // To operate on model-view matrix
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+	glMatrixMode(GL_MODELVIEW);     // To operate on model-view matrix
 	// Render a color-cube consisting of 6 quads with different colors
 	glLoadIdentity();                 // Reset the model-view matrix
 	glTranslatef(0.f, 10.0f, -7.0f);  // Move right and into the screen
@@ -50,7 +50,6 @@ void display(void)
 
 
 
-   glBindTexture(GL_TEXTURE_2D, texName);
 	Building build1=Building(Point(1.35,0.,1.3),2,2);
 	build1.Draw();
 	//glTranslatef(3.f, 0.0f, 0.0f);

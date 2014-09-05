@@ -1,18 +1,23 @@
-#include "Building.h"
 #include "Tools.h"
-#include <glut.h>
+#include "Building.h"
+
+
 
 Building::Building(Point center,double size, int type)
 :Drawable(center),size(size),type(type)
 {
+	loadTexture();
 }
 void Building::loadTexture() 
 {
-	char* buffer = Tools::esLoadTGA("wall.tga", &width, &height);
+	double width, height;
+	char* buffer = Tools::esLoadTGA("Texture/5.tga", &width, &height);
    glGenTextures(1, &texName);
    glBindTexture(GL_TEXTURE_2D, texName);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, buffer);
    free(buffer);
 }
@@ -40,7 +45,7 @@ void Building::Draw()
 }
 void Building::model1(double w, double h) 
 {
-
+	glEnable(GL_TEXTURE_2D);
    glBindTexture(GL_TEXTURE_2D, texName);	
 	glPushMatrix();
 	glTranslatef(this->center.x, this->center.y+h*size, this->center.z);
@@ -62,11 +67,11 @@ void Building::model1(double w, double h)
      
  
       // Front face  (z = 1.0f)
-      glColor3f(1.0f, 0.0f, 0.0f);     // Red
-	  glVertex3f( w*size, h*size, w*size);
-	  glVertex3f( -w*size, h*size, w*size);
-	  glVertex3f( -w*size, -h*size, w*size);
-	  glVertex3f( w*size, -h*size, w*size);
+     // glColor3f(1.0f, 0.0f, 0.0f);     // Red
+	  glTexCoord2f(0.0, 0.0); glVertex3f( w*size, h*size, w*size);
+	  glTexCoord2f(0.0, 5.0); glVertex3f( -w*size, h*size, w*size);
+	  glTexCoord2f(5.0, 5.0); glVertex3f( -w*size, -h*size, w*size);
+	  glTexCoord2f(5.0, 0.0); glVertex3f( w*size, -h*size, w*size);
  
       // Back face (z = -1.0f)
       glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
@@ -93,7 +98,7 @@ void Building::model1(double w, double h)
 	  glVertex3f( w*size, -h*size, -w*size);
    glEnd();  // End of drawing color-cube
    glPopMatrix();
- 
+   glDisable(GL_TEXTURE_2D); 
 }
 
 
