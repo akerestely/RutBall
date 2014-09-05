@@ -10,7 +10,9 @@ Ball::Ball(float radius, Point center)
 {
 	        this->oldY=center.y;
 			this->isUp=false;
-			alphaX=0, alphaY=0, alphaZ=0;
+			this->boolX=false;
+			this->boolZ=false;
+			alphaX=0, rotY=0, alphaZ=0;
 			float const R = 1./(float)(rings-1);
 			float const S = 1./(float)(sectors-1);
 			int r, s;
@@ -53,10 +55,18 @@ void Ball::Draw()
 {
         glMatrixMode(GL_MODELVIEW);
         glPushMatrix();
+		//glRotatef(rotY, 0.0f, 1.0f, 0.0f);
 		glTranslatef(this->center.x, this->center.y, this->center.z);
-		glRotatef(alphaX, 1.0f, 0.0f, 0.0f);
-		glRotatef(alphaY, 0.0f, 1.0f, 0.0f);
-		glRotatef(alphaZ, 0.0f, 0.0f, 1.0f);
+		if(this->boolZ==true)
+		{
+			glRotatef(alphaZ, 0.0f, 0.0f, 1.0f);
+			glRotatef(alphaX, 1.0f, 0.0f, 0.0f);
+		}
+		if(this->boolX==true)
+		{
+			glRotatef(alphaX, 1.0f, 0.0f, 0.0f);
+			glRotatef(alphaZ, 0.0f, 0.0f, 1.0f);
+		}
 
         glEnableClientState(GL_VERTEX_ARRAY);
         glEnableClientState(GL_NORMAL_ARRAY);
@@ -77,11 +87,13 @@ void Ball::MoveX(double dx)
 {
 	if(!this->IsCollision())
 	{
-		center.x+=dx;
+		boolZ=true;
+		boolX=false;
 		if(dx>0)
 			alphaZ-=10;
 		else
 			alphaZ+=10;
+	
 	}
 }
 
@@ -89,18 +101,20 @@ void Ball::MoveZ(double dz)
 {
 	if(!this->IsCollision())
 	{
-		center.z-=dz;
+		boolX=true;
+		boolZ=false;
 		if(dz>0)
 			alphaX-=10;
 		else
 			alphaX+=10;
+	
 	}
 }
 
-void Ball::RotateY(double sy)
+void Ball::RotateY(double ry)
 {
 	if(!this->IsCollision())
-			alphaY+=sy;
+			rotY+=ry;
 }
 
 
@@ -112,14 +126,14 @@ void Ball::Jump(double dy){
 			isUp=true;
 			oldY=center.y;
 			center.y+=dy;
-			Jump(-0.002);
+			//Jump(dy);
 		}
 		else
 		{
 			if(center.y>oldY)
 			{
-			   center.y-=0.002;
-			   Jump(-0.002);
+			  center.y-=0.002;
+			  Jump(dy);
 			}
 		   if(center.y == oldY)
 			   {

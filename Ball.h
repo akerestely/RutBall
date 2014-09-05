@@ -14,8 +14,8 @@ private:
     std::vector<GLushort> indices;
 	static const int rings=50;
 	static const int sectors=100;
-	bool isUp;
-	double oldY, alphaX, alphaY, alphaZ;
+	bool isUp, boolX, boolZ;
+	double oldY, alphaX, alphaZ, rotY;
 public:
 	~Ball(void);
 	Ball(float radius, Point center);
@@ -23,6 +23,6 @@ public:
 	bool IsCollision();
 	void MoveX(double dx);
 	void MoveZ(double dz);
-	void RotateY(double sy);
+	void RotateY(double ry);
 	void Jump(double dy);
 };
