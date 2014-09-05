@@ -2,7 +2,7 @@
 #include "Drawable.h"
 #include<vector>
 
-#define SCALLING 900
+#define SCALLING 1000
 class Node:public Drawable
 {
 	int id;

@@ -10,6 +10,9 @@
 #include "Building.h"
 #include "Ball.h"
 
+#define SPEED 0.3
+#define ROTATION 3
+
 CCamera cam;
 Map brasovMap;
 Ball *ball;
@@ -33,7 +36,7 @@ void initGL() {
 	{
 		throw message;
 	}
-	ball=new Ball(1,Point(0,0,0));
+	ball=new Ball(WIDTH/4,Point(0,0,0));
 }
 
 void display(void)
@@ -44,9 +47,8 @@ void display(void)
    
    glLoadIdentity();                 // Reset the model-view matrix
 
-   //glTranslatef(0.0f, -1.5f, -7.0f);
-   glTranslatef(0.0f, -1.0f, -10.0f);  // Move right and into the screen 
-   glRotatef(30.,1,0,0);
+   glTranslatef(0.0f, -1.0f, -10.0f); 
+   glRotatef(10.0,1,0,0);
 
    ball->Draw();
    cam.Render();
@@ -68,31 +70,31 @@ void timer(int value)
 		ball->Jump(jump);
 	if(left)
 	{
-		cam.MoveX(-0.2); 
-		ball->MoveX(-0.2);
+		cam.MoveX(-SPEED); 
+		ball->MoveX(-SPEED);
 	}
 	if(right)
 	{
-		cam.MoveX(0.2); 
-		ball->MoveX(0.2);
+		cam.MoveX(SPEED); 
+		ball->MoveX(SPEED);
 	}
 	if(up)
 	{
-		cam.MoveZ(-0.2); 
-		ball->MoveZ(0.2);
+		cam.MoveZ(-SPEED); 
+		ball->MoveZ(SPEED);
 	}
 	if(down)
 	{
-		cam.MoveZ(0.2);
-		ball->MoveZ(-0.2);
+		cam.MoveZ(SPEED);
+		ball->MoveZ(-SPEED);
 	}
 	if(rotLeft)
 	{
-		cam.RotateY(5);
+		cam.RotateY(ROTATION);
 	}
 	if(rotRight)
 	{
-		cam.RotateY(-5);
+		cam.RotateY(-ROTATION);
 	}
 	
 }
