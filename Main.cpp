@@ -58,6 +58,7 @@ void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integ
    gluPerspective(45.0f, aspect, 0.1f, 300.0f);
 }
 
+float stepZ=0.5;
 void keyboard (unsigned char key, int x, int y)
 {
    switch (key) {
@@ -65,17 +66,24 @@ void keyboard (unsigned char key, int x, int y)
 	  case 's':cam.RotateX(5);break;
 	  case 'a':cam.RotateY(-5);break;
 	  case 'd':cam.RotateY(5);break;
+	  case 27: stepZ=1.5;break;
    }
 }
-
+/*void keyboardUp (unsigned char key, int x, int y)
+{
+ switch (key) {
+	  case 27: stepZ=0.5;break;
+   }
+}
+*/
 void handleSpecialKeypress(int key, int x, int y)
 {
 	switch (key)
 	{
 	case GLUT_KEY_LEFT:  cam.MoveX(-0.3);  break;
 	case GLUT_KEY_RIGHT: cam.MoveX(0.3); break;
-	case GLUT_KEY_UP:    cam.MoveZ(-0.2);  break;
-	case GLUT_KEY_DOWN:  cam.MoveZ(0.2); break; 
+	case GLUT_KEY_UP:    cam.MoveZ(-stepZ);  break;
+	case GLUT_KEY_DOWN:  cam.MoveZ(stepZ); break; 
 	}
 }
 int main(int argc, char** argv) {
@@ -94,6 +102,7 @@ int main(int argc, char** argv) {
    glutReshapeFunc(reshape);       // Register callback handler for window re-size event
    initGL();                       // Our own OpenGL initialization
    glutKeyboardFunc(keyboard);
+   //glutKeyboardUpFunc(keyboardUp);
    glutSpecialFunc(handleSpecialKeypress);
    glutTimerFunc(0, timer, 0);     // First timer call immediately [NEW]
    glutMainLoop();                 // Enter the infinite event-processing loop
