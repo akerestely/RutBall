@@ -1,4 +1,5 @@
 #include <Windows.h>
+#include "iostream"
 #include <glut.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -7,9 +8,11 @@
 #include "vector"
 #include<map>
 #include "Map.h"
+
+
 CCamera cam;
-std::map<int,Node> nodes;
 Map brasovMap;
+
 void initGL() {
    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
    glClearDepth(1.0f);                   // Set background depth to farthest
@@ -17,6 +20,14 @@ void initGL() {
    glDepthFunc(GL_LEQUAL);    // Set the type of depth-test
    glShadeModel(GL_SMOOTH);   // Enable smooth shading
    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Nice perspective corrections
+   try
+   {
+		brasovMap = Map("Map.xml");
+   }
+   catch(char* message)
+   {
+	   throw message;
+   }
 }
 
 void display(void)
@@ -31,9 +42,7 @@ void display(void)
    //glTranslatef(-88.4f, -54.5f, 16.8f);
    //glRotatef(-85,1,0,0);
    cam.Render();
-   glRotatef(180, 0, 1, 0); 
    brasovMap.Draw();
-   glRotatef(-180, 0, 1, 0);
    glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
 }
 
@@ -58,7 +67,6 @@ void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integ
    gluPerspective(45.0f, aspect, 0.1f, 300.0f);
 }
 
-float stepZ=0.5;
 void keyboard (unsigned char key, int x, int y)
 {
    switch (key) {
@@ -66,45 +74,43 @@ void keyboard (unsigned char key, int x, int y)
 	  case 's':cam.RotateX(5);break;
 	  case 'a':cam.RotateY(-5);break;
 	  case 'd':cam.RotateY(5);break;
-	  case 27: stepZ=1.5;break;
    }
 }
-/*void keyboardUp (unsigned char key, int x, int y)
-{
- switch (key) {
-	  case 27: stepZ=0.5;break;
-   }
-}
-*/
+
 void handleSpecialKeypress(int key, int x, int y)
 {
 	switch (key)
 	{
 	case GLUT_KEY_LEFT:  cam.MoveX(-0.3);  break;
 	case GLUT_KEY_RIGHT: cam.MoveX(0.3); break;
-	case GLUT_KEY_UP:    cam.MoveZ(-stepZ);  break;
-	case GLUT_KEY_DOWN:  cam.MoveZ(stepZ); break; 
+	case GLUT_KEY_UP:    cam.MoveZ(-0.2);  break;
+	case GLUT_KEY_DOWN:  cam.MoveZ(0.2); break; 
 	}
 }
-int main(int argc, char** argv) {
-
-	if (!Tools::ReadNodesFromXML("Map.xml", nodes))
+int main(int argc, char** argv) 
+{
+	try
 	{
-		return 0;
+	   glutInit(&argc, argv);            // Initialize GLUT
+	   glutInitDisplayMode(GLUT_DOUBLE); // Enable double buffered mode
+	   glutInitWindowSize(640, 480);   // Set the window's initial width & height
+	   glutInitWindowPosition(50, 50); // Position the window's initial top-left corner
+	   glutCreateWindow("Test");          // Create window with the given title
+	   glutDisplayFunc(display);       // Register callback handler for window re-paint event
+	   glutReshapeFunc(reshape);       // Register callback handler for window re-size event
+	   initGL();                       // Our own OpenGL initialization
+	   glutKeyboardFunc(keyboard);
+	   glutSpecialFunc(handleSpecialKeypress);
+	   glutTimerFunc(0, timer, 0);     // First timer call immediately [NEW]
+	   glutMainLoop();                 // Enter the infinite event-processing loop
 	}
-	brasovMap = Map(nodes);
-   glutInit(&argc, argv);            // Initialize GLUT
-   glutInitDisplayMode(GLUT_DOUBLE); // Enable double buffered mode
-   glutInitWindowSize(640, 480);   // Set the window's initial width & height
-   glutInitWindowPosition(50, 50); // Position the window's initial top-left corner
-   glutCreateWindow("Test");          // Create window with the given title
-   glutDisplayFunc(display);       // Register callback handler for window re-paint event
-   glutReshapeFunc(reshape);       // Register callback handler for window re-size event
-   initGL();                       // Our own OpenGL initialization
-   glutKeyboardFunc(keyboard);
-   //glutKeyboardUpFunc(keyboardUp);
-   glutSpecialFunc(handleSpecialKeypress);
-   glutTimerFunc(0, timer, 0);     // First timer call immediately [NEW]
-   glutMainLoop();                 // Enter the infinite event-processing loop
+	catch(char* message)
+	{
+		std::cout<<message<<"\n";
+	}
+	catch(...)
+	{
+		return -5;
+	}
    return 0;
 }

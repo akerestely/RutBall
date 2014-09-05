@@ -1,9 +1,12 @@
 #include "Map.h"
 #include "cmath"
 #include "glut.h"
-Map::Map(std::map<int, Node> nodes)
+Map::Map(char* fileName)
 {
-	this->nodes.insert(nodes.begin(), nodes.end());
+	if (!Tools::ReadNodesFromXML(fileName, this->nodes))
+	{
+		throw "Cannot load map!";
+	}
 }
 Map::Map()
 {
@@ -58,6 +61,8 @@ CircleLineIntersection Map::BallCollision(int nodeKey, Point ballCenter)
 
 void Map::Draw()
 {
+	glPushMatrix();
+	glRotatef(180, 0, 1, 0);
 	Point first,second;
 	for (std::map<int, Node>::iterator it = this->nodes.begin(); it != this->nodes.end(); ++it)
 	{
@@ -78,4 +83,5 @@ void Map::Draw()
 		}
 		
 	}
+	glPopMatrix();
 }
