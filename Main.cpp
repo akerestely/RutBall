@@ -5,34 +5,61 @@
 #include "CameraSpectator.h"
 #include "Tools.h"
 #include "vector"
+#include "Building.h"
 CCamera cam;
 std::vector<Node> nodes;
 void initGL() {
+
    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
    glClearDepth(1.0f);                   // Set background depth to farthest
    glEnable(GL_DEPTH_TEST);   // Enable depth testing for z-culling
    glDepthFunc(GL_LEQUAL);    // Set the type of depth-test
+   glEnable(GL_TEXTURE_2D);
+   glEnable(GL_BLEND);
    glShadeModel(GL_SMOOTH);   // Enable smooth shading
    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Nice perspective corrections
 }
 
 void display(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   glMatrixMode(GL_MODELVIEW);     // To operate on model-view matrix
- 
-   // Render a color-cube consisting of 6 quads with different colors
-   glLoadIdentity();                 // Reset the model-view matrix
-   
-   glTranslatef(0.0f, -0.5f, -7.0f);  // Move right and into the screen 
-   cam.Render();
-   glRotatef(180, 0, 1, 0); 
-   for (int i = 0; i < nodes.size(); i++)
-   {
-	   nodes[i].Draw();
-   }	
-   glRotatef(-180, 0, 1, 0);
-   glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
+  	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glMatrixMode(GL_MODELVIEW);     // To operate on model-view matrix
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+	// Render a color-cube consisting of 6 quads with different colors
+	glLoadIdentity();                 // Reset the model-view matrix
+	glTranslatef(0.f, 10.0f, -7.0f);  // Move right and into the screen
+	glRotated(30,1.,0,0);
+	cam.Render();
+	glTranslatef(0.f, -10, 0);  // Move right and into the screen
+
+	//_____________________
+
+	glBegin(GL_QUADS);        
+	 glColor3f(1.0f, 1.0f, 1.0f);     // Green
+	  glVertex3f( -100., 0., -100.);
+	  glVertex3f(-100.,0.,100.);
+	  glVertex3f(100.,0.,100.);
+	  glVertex3f( 100.,0.,-100.);
+
+	  glEnd();
+
+
+
+//_______________________
+
+
+
+
+   glBindTexture(GL_TEXTURE_2D, texName);
+	Building build1=Building(Point(1.35,0.,1.3),2,2);
+	build1.Draw();
+	//glTranslatef(3.f, 0.0f, 0.0f);
+	
+
+
+	//glTranslatef(3.f, 0.0f, 0.0f);
+	glutSwapBuffers();  // Swap the front and qback frame buffers (double buffering)
+
 }
 
 void timer(int value) 
