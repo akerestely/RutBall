@@ -98,3 +98,8 @@ void CCamera::MoveX ( GLfloat Distance )
 	MoveVector.x = ViewDir.z * -Distance;
 	AddF3dVectorToVector(&Position, &MoveVector );
 }
+
+Point CCamera::GetPosition()
+{
+	return Point(Position.x, Position.y, Position.z);
+}

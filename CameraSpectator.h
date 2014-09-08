@@ -1,4 +1,5 @@
 #include <glut.h>		// Need to include it here because the GL* types are required
+#include "Point.h"
 #define PI 3.1415265359
 #define PIdiv180 3.1415265359/180.0
 
@@ -36,6 +37,7 @@ public:
 	void RotateXYZ ( SF3dVector Angles );
 	void MoveZ ( GLfloat Distance );
 	void MoveX ( GLfloat Distance );
+	Point GetPosition();
 };
 
 

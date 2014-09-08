@@ -17,6 +17,10 @@ CCamera cam;
 Map brasovMap;
 Ball *ball;
 bool up,down,left,right,rotLeft,rotRight, jump;
+Building build1 = Building(Point(1.35, 0., 1.3), 8, 2);
+Building build2 = Building(Point(5.2, 0., 2.2), 8, 2);
+Building build3 = Building(Point(20.2, 0., 18.2), 20, 3);
+
 
 
 void initGL() {
@@ -28,14 +32,14 @@ void initGL() {
 	glEnable(GL_BLEND);
 	glShadeModel(GL_SMOOTH);   // Enable smooth shading
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Nice perspective corrections
-	try
+	/*try
 	{
 		brasovMap = Map("Map.xml");
 	}
 	catch(char* message)
 	{
 		throw message;
-	}
+	}*/
 	ball=new Ball(WIDTH/4,Point(0,0,0));
 }
 
@@ -54,11 +58,11 @@ void display(void)
    cam.Render();
    brasovMap.Draw();
 
-	Building build1=Building(Point(1.35,0.,1.3),8,2);
+//	Building build1=Building(Point(1.35,0.,1.3),8,2);
 	build1.Draw();	
-	Building build2=Building(Point(5.2,0.,2.2),8,2);
+//	Building build2=Building(Point(5.2,0.,2.2),8,2);
 	build2.Draw();
-	Building build3=Building(Point(20.2,0.,18.2),20,3);
+//	Building build3=Building(Point(20.2,0.,18.2),20,3);
 	build3.Draw();
 
     glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
@@ -68,6 +72,9 @@ void timer(int value)
 {
 	glutPostRedisplay();
 	glutTimerFunc(15, timer, 0);
+	build1.SwitchMode(cam.GetPosition());
+	build2.SwitchMode(cam.GetPosition());
+	build3.SwitchMode(cam.GetPosition());
 	if(jump)
 		ball->Jump(jump);
 	if(left)
@@ -98,7 +105,6 @@ void timer(int value)
 	{
 		cam.RotateY(-ROTATION);
 	}
-	
 }
 
 void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integer
