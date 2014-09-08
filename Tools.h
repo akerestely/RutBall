@@ -4,10 +4,9 @@
 #include "Point.h"
 #include "Node.h"
 
-enum CircleLineIntersection{
-	NoIntersection,
-	Tangent,
-	Secant
+enum BallStreetPosition{
+	Inside,
+	Outside,
 };
 class Tools
 {

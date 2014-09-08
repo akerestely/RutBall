@@ -23,7 +23,6 @@ private:
 	double energy;
 	double oldY, alphaX, alphaZ, rotY;
 	GLuint texName;
-
 	void textureBall();
 public:
 	~Ball(void);
