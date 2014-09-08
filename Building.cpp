@@ -1,16 +1,18 @@
 #include "Tools.h"
+#include<ctime>
 #include "Building.h"
 #include "Texture.h"
 
-Building::Building(Point center,double size, int type)
-:Drawable(center),size(size),type(type)
+
+Building::Building(Point center,double size, int type,double angleOfRotation)
+:Drawable(center),size(size),type(type),angleOfRotation(angleOfRotation)
 {
+	
+	int mytime = rand()%3;
+	Texture tex=Texture::GetInstance();
 }
 
-Building::Building(Point center,double l, double w, double h)
-:Drawable(center),length(l),width(w),height(h)
-{
-}
+
 void Building::Draw() 
 {
 	switch(this->type) {
@@ -22,7 +24,7 @@ void Building::Draw()
 			} 
 		case 2:
 			{
-				double w=0.25,h=3.25; 
+				double w=0.25,h=0.75; 
 				model1(w,h);
 				break;
 			} 
@@ -43,6 +45,8 @@ void Building::model1(double w, double h)
 	glBindTexture(GL_TEXTURE_2D, tex.wallTex1);	
 	glPushMatrix();
 	glTranslatef(this->center.x, this->center.y+h*size, this->center.z);
+	glRotated(this->angleOfRotation,0, 1, 0);
+	
 	glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
 	{
 		// Top face (y = 1.0f)
@@ -90,7 +94,7 @@ void Building::model1(double w, double h)
 	}
 	glEnd();
 
-	glBindTexture(GL_TEXTURE_2D, tex.wallTex2);
+//	glBindTexture(GL_TEXTURE_2D, tex.wallTex2);
 	glBegin(GL_QUADS);
 	{
 		// Back face (z = -1.0f)
