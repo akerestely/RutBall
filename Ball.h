@@ -21,7 +21,6 @@ private:
 	double energy;
 	double oldY, alphaX, alphaZ, rotY;
 	int texnr;
-
 public:
 	~Ball(void);
 	Ball(float radius, Point center);

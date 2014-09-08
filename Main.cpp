@@ -10,19 +10,22 @@
 #include "Building.h"
 #include "Ball.h"
 #include "Card.h"
+#include "SkyCube.h"
 
 #define SPEED 0.3
 #define ROTATION 3
 
 CCamera cam;
+SkyCube skyCube;
 Map brasovMap;
 Ball *ball;
 bool up,down,left,right,rotLeft,rotRight, jump;
 int texNr=0;
 Card card(Point(47, 1.0, 15));
+int lastCheckPointKey;
 
-
-void initGL() {
+void initGL() 
+{
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
 	glClearDepth(1.0f);                   // Set background depth to farthest
 	glEnable(GL_DEPTH_TEST);   // Enable depth testing for z-culling
@@ -34,12 +37,13 @@ void initGL() {
 	try
 	{
 		brasovMap = Map("Map.xml");
+		ball = new Ball(WIDTH / 8, Point(0, 0, 0));
+		lastCheckPointKey = STARTPOINT;
 	}
 	catch(char* message)
 	{
 		throw message;
 	}
-	ball=new Ball(WIDTH/4,Point(0,0,0));
 }
 
 void display(void)
@@ -51,11 +55,13 @@ void display(void)
    glLoadIdentity();                 // Reset the model-view matrix
 
    glTranslatef(0.0f, -1.0f, -10.0f); 
-   glRotatef(10.0,1,0,0);
+   glRotatef(5.0,1,0,0);
 
    ball->SetTexNr(texNr);
    ball->Draw();
    cam.Render();
+   skyCube.Draw();
+
    brasovMap.Draw();
    card.Draw();
 
@@ -68,32 +74,59 @@ void display(void)
 
     glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
 }
-
 void timer(int value) 
 {
 	glutPostRedisplay();
 	glutTimerFunc(15, timer, 0);
-	if(jump)
+	SF3dVector center = cam.GetPosition();
+	//Point center = ball->GetPosition();
+	if (jump)
+	{
 		ball->Jump(jump);
-	if(left)
+	}
+	if (left)
 	{
 		cam.MoveX(-SPEED); 
 		ball->MoveX(-SPEED);
+		center = cam.GetPosition();
+		if (brasovMap.BallCollision(lastCheckPointKey, Point(center.x, center.y, center.z)) == BallStreetPosition::Outside)
+		{
+			cam.MoveX(SPEED); 
+			ball->MoveX(SPEED);
+		}		
 	}
-	if(right)
+	if (right)
 	{
 		cam.MoveX(SPEED); 
 		ball->MoveX(SPEED);
+		center = cam.GetPosition();
+		if (brasovMap.BallCollision(lastCheckPointKey, Point(center.x, center.y, center.z)) == BallStreetPosition::Outside)
+		{
+			cam.MoveX(-SPEED);
+			ball->MoveX(-SPEED);
+		}
 	}
-	if(up)
+	if (up)
 	{
 		cam.MoveZ(-SPEED); 
 		ball->MoveZ(SPEED);
+		center = cam.GetPosition();
+		if (brasovMap.BallCollision(lastCheckPointKey, Point(center.x, center.y, center.z)) == BallStreetPosition::Outside)
+		{
+			cam.MoveZ(SPEED);
+			ball->MoveZ(-SPEED);
+		}
 	}
-	if(down)
+	if (down)
 	{
-		cam.MoveZ(SPEED);
+		cam.MoveZ(SPEED); 
 		ball->MoveZ(-SPEED);
+		center = cam.GetPosition();
+		if (brasovMap.BallCollision(lastCheckPointKey, Point(center.x, center.y, center.z)) == BallStreetPosition::Outside)
+		{
+			cam.MoveZ(-SPEED);
+			ball->MoveZ(SPEED);
+		}
 	}
 	if(rotLeft)
 	{
@@ -103,7 +136,7 @@ void timer(int value)
 	{
 		cam.RotateY(-ROTATION);
 	}
-	
+	skyCube.SetPoz(Point(cam.GetPosition().x,0,cam.GetPosition().z));
 }
 
 void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integer
@@ -129,6 +162,8 @@ void keyboardPressed (unsigned char key, int x, int y)
 		//  case 's':cam.RotateX(5);break;
 	case 'a':rotLeft=true; break;
 	case 'd':rotRight=true; break;
+	case 'w':cam.RotateX(5);break;
+	case 's':cam.RotateX(-5);break;
 	case ' ':jump=true; break;
 	case 't':if(texNr==4)
 				 texNr=0;

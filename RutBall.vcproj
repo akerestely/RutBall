@@ -211,6 +211,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SkyCube.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Texture.cpp"
 				>
 			</File>
@@ -258,6 +262,10 @@
 			</File>
 			<File
 				RelativePath=".\Point.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SkyCube.h"
 				>
 			</File>
 			<File

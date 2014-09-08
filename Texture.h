@@ -16,4 +16,6 @@ public:
 	GLuint wallTex2;
 	GLuint ballTex[5];
 	GLuint cardTex[2];
+	GLuint skyCube[6];
+>>>>>>> origin/master
 };

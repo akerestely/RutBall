@@ -8,7 +8,7 @@ Ball::~Ball(void)
 }
 
 Ball::Ball(float radius, Point center)
-	: Drawable(center)
+: Drawable(center)
 {			
 	        this->oldY=center.y;
 			this->boolX=false;
@@ -52,7 +52,6 @@ Ball::Ball(float radius, Point center)
 					*i++ = (r+1) * sectors + s;
 			}
 			canJump=true;
-
 }
 
 void Ball::SetTexNr(int nr){
@@ -67,7 +66,7 @@ void Ball::Draw()
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, tex.ballTex[texnr]);
         glPushMatrix();
-		glTranslatef(this->center.x, this->center.y, this->center.z);
+		glTranslatef(this->center.x, this->center.y - 0.5, this->center.z);
 
 		if(this->boolZ==true)
 		{

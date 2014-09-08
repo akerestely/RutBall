@@ -38,6 +38,7 @@ CCamera::CCamera()
 	ViewDirChanged = false;
 	//Only to be sure:
 	RotatedX = RotatedY = RotatedZ = 0.0;
+	//RotatedY = 180;
 }
 
 void CCamera::GetViewDir( void )
@@ -97,4 +98,8 @@ void CCamera::MoveX ( GLfloat Distance )
 	MoveVector.y = 0.0;
 	MoveVector.x = ViewDir.z * -Distance;
 	AddF3dVectorToVector(&Position, &MoveVector );
+}
+SF3dVector CCamera::GetPosition()
+{
+	return Position;
 }

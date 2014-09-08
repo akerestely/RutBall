@@ -36,6 +36,7 @@ public:
 	void RotateXYZ ( SF3dVector Angles );
 	void MoveZ ( GLfloat Distance );
 	void MoveX ( GLfloat Distance );
+	SF3dVector GetPosition();
 };
 
 
