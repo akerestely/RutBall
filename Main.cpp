@@ -9,11 +9,13 @@
 #include "Map.h"
 #include "Building.h"
 #include "Ball.h"
+#include "SkyCube.h"
 
 #define SPEED 0.3
 #define ROTATION 3
 
 CCamera cam;
+SkyCube skyCube;
 Map brasovMap;
 Ball *ball;
 bool up,down,left,right,rotLeft,rotRight, jump;
@@ -51,10 +53,12 @@ void display(void)
    glLoadIdentity();                 // Reset the model-view matrix
 
    glTranslatef(0.0f, -1.0f, -10.0f); 
-   glRotatef(10.0,1,0,0);
+   glRotatef(5.0,1,0,0);
 
    ball->Draw();
    cam.Render();
+   skyCube.Draw();
+
    brasovMap.Draw();
 
 	Building build1=Building(Point(1.35,0.,1.3),8,2);
@@ -128,7 +132,7 @@ void timer(int value)
 	{
 		cam.RotateY(-ROTATION);
 	}
-	
+	skyCube.SetPoz(Point(cam.GetPosition().x,0,cam.GetPosition().z));
 }
 
 void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integer
@@ -154,6 +158,8 @@ void keyboardPressed (unsigned char key, int x, int y)
 		//  case 's':cam.RotateX(5);break;
 	case 'a':rotLeft=true; break;
 	case 'd':rotRight=true; break;
+	case 'w':cam.RotateX(5);break;
+	case 's':cam.RotateX(-5);break;
 	case ' ':jump=true; break;
 	}
 }
