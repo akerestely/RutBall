@@ -7,7 +7,7 @@ Ball::~Ball(void)
 }
 
 Ball::Ball(float radius, Point center)
-	: Drawable(center)
+: Drawable(center)
 {			
 	        this->oldY=center.y;
 			this->boolX=false;
@@ -51,8 +51,7 @@ Ball::Ball(float radius, Point center)
 					*i++ = (r+1) * sectors + s;
 			}
 			textureBall();
-			canJump=true;
-
+			canJump = true;
 }
 void Ball::Draw()
 {
