@@ -2,9 +2,8 @@
 #include "Node.h"
 #include "map"
 #include "Tools.h"
-#define ROOTPOINT 5
-//#define STARTPOINT 15
-#define STARTPOINT 5
+#include "glut.h"
+#define STARTPOINT 15
 #define ENDPOINT 5
 class Map: public Drawable
 {
@@ -15,6 +14,8 @@ class Map: public Drawable
 	bool ballInsideStreet(int firstNodeKey, int adjacentIndex, Point ballCenter);
 	bool Map::centerInsideStreet(Street street, Point ballCenter);
 	double getLength(Point A, Point B);
+	GLuint texName;
+	void textureRoad();
 public:
 	Map(char* fileName);
 	Map();

@@ -17,6 +17,7 @@ Node::Node()
 void Node::Draw()
 {
 	glBegin(GL_TRIANGLE_FAN);
+	glColor3f(109 / 255., 113 / 255., 117 / 255.);
 	glVertex3d(center.x, center.y, center.z);
 	for(int theta = 0; theta <= 360; theta++)
 	{

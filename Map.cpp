@@ -8,11 +8,12 @@ Map::Map(char* fileName)
 	{
 		throw "Cannot load map!";
 	}
-	this->center.x=nodes[ROOTPOINT].getCenter().x;
-	this->center.y=nodes[ROOTPOINT].getCenter().y;
-	this->center.z=nodes[ROOTPOINT].getCenter().z;
+	this->center.x=nodes[STARTPOINT].getCenter().x;
+	this->center.y=nodes[STARTPOINT].getCenter().y;
+	this->center.z=nodes[STARTPOINT].getCenter().z;
 	translateToCenter();
 	computeStreets();
+	textureRoad();
 }
 
 void Map::computeStreets()
@@ -118,24 +119,31 @@ BallStreetPosition Map::BallCollision(int &nodeKey, Point ballCenter)
 
 void Map::Draw()
 {
+	glMatrixMode(GL_MODELVIEW);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, texName);
 	Point first,second;
 	for (std::map<int, Node>::iterator it = this->nodes.begin(); it != this->nodes.end(); ++it)
 	{
 
 		Node currentNode = (*it).second;
 		std::vector<int> destinations=currentNode.getDestinations();
-		currentNode.Draw();
 		for (int i = 0; i < destinations.size(); i++)
 		{
 			glBegin(GL_QUADS);
 			Street street = currentNode.GetStreet(i);
+			
+			glColor3f(116 / 255., 125 / 255., 135 / 255.);
+			
 			glVertex3d(street.corners[0].x, street.corners[0].y, street.corners[0].z);
 			glVertex3d(street.corners[1].x, street.corners[1].y, street.corners[1].z);
 			glVertex3d(street.corners[2].x, street.corners[2].y, street.corners[2].z);
 			glVertex3d(street.corners[3].x, street.corners[3].y, street.corners[3].z);
 			glEnd();
 		}
+		currentNode.Draw();
 	}
+	glDisable(GL_TEXTURE_2D);
 }
 Node Map::GetStartPoint()
 {
@@ -213,4 +221,17 @@ bool Map::centerInsideStreet(Street street, Point ballCenter)
 double Map::getLength(Point A, Point B)
 {
 	return sqrt((A.x - B.x) * (A.x - B.x) + (A.z - B.z) * (A.z - B.z));
+}
+void Map::textureRoad()
+{	
+	 int width,height;
+	 char* buffer = Tools::esLoadTGA("Texture/football.tga",&width,&height);
+	 glGenTextures ( 1, &texName);
+	 glBindTexture ( GL_TEXTURE_2D, texName);
+	 glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	 glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP); 
+	 glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, width, height, 0,  GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer ); 
+	 free ( buffer );
+
 }
