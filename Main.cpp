@@ -1,4 +1,5 @@
 #include <Windows.h>
+#include <ctime>
 #include "iostream"
 #include <glut.h>
 #include <stdlib.h>
@@ -23,9 +24,11 @@ bool up,down,left,right,rotLeft,rotRight, jump;
 int texNr=0;
 Card card;
 int lastCheckPointKey;
+std::vector<Building> buildings;
 
 void initGL() 
 {
+ 	
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
 	glClearDepth(1.0f);                   // Set background depth to farthest
 	glEnable(GL_DEPTH_TEST);   // Enable depth testing for z-culling
@@ -47,6 +50,54 @@ void initGL()
 	{
 		throw message;
 	}
+	srand(time(NULL));
+	buildings.push_back(Building(Point(35.0,0.,16.0),20,3,16));
+   //__________________________2 ______________________
+   buildings.push_back(Building(Point(49.0,0.,22.0),15,2,15));
+   //_____________________3__________
+   buildings.push_back(Building(Point(55.0,0.,10.0),15,3,16));
+
+   buildings.push_back(Building(Point(10.0,0.,-2.0),12,3,10));
+   buildings.push_back(Building(Point(-8.0,0.,2.0),10,3,10));
+   buildings.push_back(Building(Point(56.0,0.,-82.0),10,3,-10));
+   buildings.push_back(Building(Point(64.0,0.,-96.0),12,3,-10));
+   buildings.push_back(Building(Point(72.0,0.,-84.0),12,3,-10));
+   buildings.push_back(Building(Point(85.0,0.,-81.0),12,3,-14));
+   buildings.push_back(Building(Point(98.0,0.,-78.0),12,3,-10));
+   buildings.push_back(Building(Point(111.0,0.,-77.0),12,3,-10));
+   buildings.push_back(Building(Point(125.0,0.,-78.0),12,3,-10));
+   buildings.push_back(Building(Point(139.0,0.,-73.0),12,3,-10));
+   buildings.push_back(Building(Point(152.0,0.,-69.0),12,3,-10));
+   buildings.push_back(Building(Point(165.0,0.,-70.0),12,3,-10));
+   buildings.push_back(Building(Point(178.0,0.,-68.0),12,3,-10));
+   buildings.push_back(Building(Point(190.0,0.,-65.0),12,3,-10));
+   buildings.push_back(Building(Point(197.0,0.,-49.50),12,3,-10));
+   buildings.push_back(Building(Point(178.0,0.,-68.0),12,3,-10));
+   buildings.push_back(Building(Point(86.0,0.,-14.0),12,3,10));
+   buildings.push_back(Building(Point(100.0,0.,-17.0),12,3,10));
+   buildings.push_back(Building(Point(114.0,0.,-20.0),12,3,10));
+   buildings.push_back(Building(Point(128.0,0.,-23.0),12,3,10));
+   buildings.push_back(Building(Point(142.0,0.,-26.0),12,3,10));
+   buildings.push_back(Building(Point(156.0,0.,-29.0),12,3,10));
+   buildings.push_back(Building(Point(170.0,0.,-32.0),12,3,10));
+   buildings.push_back(Building(Point(184.0,0.,-35.0),12,3,10));
+   buildings.push_back(Building(Point(83.0,0.,-32.0),12,3,10));
+   buildings.push_back(Building(Point(97.0,0.,-35.0),12,3,10));
+   buildings.push_back(Building(Point(111.0,0.,-38.0),12,3,10));
+   buildings.push_back(Building(Point(126.0,0.,-41.0),12,3,10));
+   buildings.push_back(Building(Point(138.0,0.,-41.0),12,2,10));
+   buildings.push_back(Building(Point(152.0,0.,-52.0),12,3,-10));
+   buildings.push_back(Building(Point(165.0,0.,-50.0),12,3,-10));
+   buildings.push_back(Building(Point(178.0,0.,-51.0),12,2,-10));
+   buildings.push_back(Building(Point(81.0,0.,-53.0),12,3,15));
+   buildings.push_back(Building(Point(98.0,0.,-53.0),12,3,15));
+   buildings.push_back(Building(Point(111.0,0.,-58.0),12,3,-15));
+   buildings.push_back(Building(Point(125.0,0.,-58.0),12,3,-10));
+   buildings.push_back(Building(Point(139.0,0.,-53.0),12,3,-10));
+   buildings.push_back(Building(Point(152.0,0.,-52.0),12,3,-10));
+   buildings.push_back(Building(Point(165.0,0.,-50.0),12,3,-10));
+   buildings.push_back(Building(Point(178.0,0.,-51.0),12,2,-10));
+
 }
 
 void display(void)
@@ -68,12 +119,22 @@ void display(void)
    brasovMap.Draw();
    card.Draw();
 
-	Building build1=Building(Point(1.35,0.,1.3),8,2);
+	/*Building build1=Building(Point(1.35,0.,1.3),8,2);
 	build1.Draw();	
 	Building build2=Building(Point(5.2,0.,2.2),8,2);
-	build2.Draw();
-	Building build3=Building(Point(20.2,0.,18.2),20,3);
-	build3.Draw();
+	build2.Draw();*/
+	
+   //________________________1 _________________
+
+   //________________________1 _________________
+
+  
+   
+   for(int i=0;i<buildings.size();i++) {
+	   buildings[i].Draw();
+   }
+
+
 
     glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
 }

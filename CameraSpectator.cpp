@@ -1,4 +1,5 @@
 #include "math.h"
+#include <iostream>
 #include "CameraSpectator.h"
 SF3dVector F3dVector ( GLfloat x, GLfloat y, GLfloat z )
 {
@@ -29,9 +30,9 @@ void AddF3dVectorToVector ( SF3dVector * Dst, SF3dVector * V2)
 CCamera::CCamera()
 {
 	//Init with standard OGL values:
-	Position = F3dVector (	0.0, 
+	Position = F3dVector (	75.0, 
 							1.0,
-							0.0);
+							-20.0);
 	ViewDir = F3dVector(	0.0,
 							0.0,
 							-1.0);
@@ -78,6 +79,7 @@ void CCamera::Render( void )
 	glRotatef(-RotatedY , 0.0, 1.0, 0.0);
 	glRotatef(-RotatedZ , 0.0, 0.0, 1.0);
 	glTranslatef( -Position.x, -Position.y, -Position.z );
+	std::cout<<Position.x<<" "<<Position.z<<std::endl;
 }
 
 void CCamera::MoveZ( GLfloat Distance )

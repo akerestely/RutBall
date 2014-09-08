@@ -18,4 +18,5 @@ public:
 	GLuint cardTex[2];
 	GLuint skyCube[6];
 	GLuint roadTex;
+	GLuint textures[10];
 };
