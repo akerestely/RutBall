@@ -41,8 +41,6 @@ void Building::Draw()
 }
 void Building::model1(double w, double h) 
 {
-	
-	Texture tex=Texture::GetInstance();
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, myTexture);	
 	glPushMatrix();
