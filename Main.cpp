@@ -32,7 +32,7 @@ void initGL()
 	try
 	{
 		brasovMap = Map("Map.xml");
-		ball = new Ball(WIDTH / 4, brasovMap.GetStartPoint().getCenter());
+		ball = new Ball(WIDTH / 8, brasovMap.GetStartPoint().getCenter());
 		lastCheckPointKey = STARTPOINT;
 	}
 	catch(char* message)

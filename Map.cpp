@@ -76,7 +76,7 @@ void Map::getIntersection(Node first, Node second, Point &firstPoint, Point &sec
 BallStreetPosition Map::BallCollision(int &nodeKey, Point ballCenter)
 {
 	Point lastNodePosition = nodes[nodeKey].getCenter();
-	double radius = WIDTH / 4;
+	double radius = WIDTH / 8;
 	double insideNode = radius + sqrt((ballCenter.x - lastNodePosition.x) * (ballCenter.x - lastNodePosition.x) + (ballCenter.z - lastNodePosition.z) * (ballCenter.z - lastNodePosition.z));
 	if (insideNode <= WIDTH / 2)
 	{
@@ -151,7 +151,7 @@ Node Map::GetEndPoint()
 }
 bool Map::ballInsideStreet(int firstNodeKey, int adjacentIndex, Point ballCenter)
 {
-	double radius = WIDTH / 4;
+	double radius = WIDTH / 8;
 	Street street = nodes[firstNodeKey].GetStreet(adjacentIndex);
 	if (!centerInsideStreet(street, ballCenter))
 	{

@@ -59,7 +59,7 @@ void Ball::Draw()
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texName);
         glPushMatrix();
-		glTranslatef(this->center.x, this->center.y, this->center.z);
+		glTranslatef(this->center.x, this->center.y - 0.5, this->center.z);
 
 		if(this->boolZ==true)
 		{
