@@ -9,6 +9,7 @@
 #include "Map.h"
 #include "Building.h"
 #include "Ball.h"
+#include "Card.h"
 
 #define SPEED 0.3
 #define ROTATION 3
@@ -17,6 +18,8 @@ CCamera cam;
 Map brasovMap;
 Ball *ball;
 bool up,down,left,right,rotLeft,rotRight, jump;
+int texNr=0;
+Card card(Point(47, 1.0, 15));
 
 
 void initGL() {
@@ -50,9 +53,11 @@ void display(void)
    glTranslatef(0.0f, -1.0f, -10.0f); 
    glRotatef(10.0,1,0,0);
 
+   ball->SetTexNr(texNr);
    ball->Draw();
    cam.Render();
    brasovMap.Draw();
+   card.Draw();
 
 	Building build1=Building(Point(1.35,0.,1.3),8,2);
 	build1.Draw();	
@@ -125,6 +130,11 @@ void keyboardPressed (unsigned char key, int x, int y)
 	case 'a':rotLeft=true; break;
 	case 'd':rotRight=true; break;
 	case ' ':jump=true; break;
+	case 't':if(texNr==4)
+				 texNr=0;
+			 else
+			     texNr++;
+			 break;
 	}
 }
 void keyboardReleased (unsigned char key, int x, int y)
