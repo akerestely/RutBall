@@ -13,4 +13,5 @@ public:
 	GLuint wallTex1;
 	GLuint wallTex2;
 	GLuint ball;
+	GLuint skyCube[6];
 };
