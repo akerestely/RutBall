@@ -25,6 +25,75 @@ Texture::Texture(void)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer);
 	free(buffer);
+
+
+	buffer = esLoadTGA("Texture/football.tga",&tWidth,&tHeight);
+	glGenTextures ( 1, ballTex);
+	glBindTexture ( GL_TEXTURE_2D, ballTex[0]);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP); 
+	glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0,  GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer ); 
+	free ( buffer );
+	
+
+	buffer = esLoadTGA("Texture/basketball.tga",&tWidth,&tHeight);
+	glGenTextures ( 1, ballTex+1);
+	glBindTexture ( GL_TEXTURE_2D, ballTex[1]);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP); 
+	glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0,  GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer ); 
+	free ( buffer );
+
+
+	buffer = esLoadTGA("Texture/beachball.tga",&tWidth,&tHeight);
+	glGenTextures ( 1, ballTex+2);
+	glBindTexture ( GL_TEXTURE_2D, ballTex[2]);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP); 
+	glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0,  GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer ); 
+	free ( buffer );
+
+	
+	buffer = esLoadTGA("Texture/tennisball.tga",&tWidth,&tHeight);
+	glGenTextures ( 1, ballTex+3);
+	glBindTexture ( GL_TEXTURE_2D, ballTex[3]);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP); 
+	glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0,  GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer ); 
+	free ( buffer );
+
+
+	buffer = esLoadTGA("Texture/discoball.tga",&tWidth,&tHeight);
+	glGenTextures ( 1, ballTex+4);
+	glBindTexture ( GL_TEXTURE_2D, ballTex[4]);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP); 
+	glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0,  GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer ); 
+	free ( buffer );
+	
+	buffer = esLoadTGA("Texture/route.tga",&tWidth,&tHeight);
+	glGenTextures ( 1, cardTex);
+	glBindTexture ( GL_TEXTURE_2D, cardTex[0]);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP); 
+	glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0,  GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer ); 
+	free ( buffer );
+
+	buffer = esLoadTGA("Texture/woodTexture.tga",&tWidth,&tHeight);
+	glGenTextures ( 1, cardTex+1);
+	glBindTexture ( GL_TEXTURE_2D, cardTex[1]);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP); 
+	glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0,  GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer ); 
+	free ( buffer );
+
 }
 
 char* Texture::esLoadTGA(char *fileName, double *width, double *height)

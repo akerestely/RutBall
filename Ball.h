@@ -4,8 +4,6 @@
 #include "Point.h"
 #include "math.h"
 #include "Drawable.h"
-#include "Tools.h"
-#include "glut.h"
 
 #define POWER 0.5
 #define GRAVITY 0.05
@@ -22,12 +20,12 @@ private:
 	bool canJump;
 	double energy;
 	double oldY, alphaX, alphaZ, rotY;
-	GLuint texName;
+	int texnr;
 
-	void textureBall();
 public:
 	~Ball(void);
 	Ball(float radius, Point center);
+	void SetTexNr(int nr);
 	void Draw();
 	void MoveX(double dx);
 	void MoveZ(double dz);
