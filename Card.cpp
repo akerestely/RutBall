@@ -1,6 +1,7 @@
 #include "Texture.h"
 #include "Card.h"
-
+#define WIDTH 1.5
+#define HEIGHT 2.5
 
 Card::Card(Point center)
 :Drawable(center)

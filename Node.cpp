@@ -17,10 +17,11 @@ Node::Node()
 void Node::Draw()
 {
 	glBegin(GL_TRIANGLE_FAN);
-	glColor3f(109 / 255., 113 / 255., 117 / 255.);
+	glTexCoord2d(0.5, 0.5);
 	glVertex3d(center.x, center.y, center.z);
 	for(int theta = 0; theta <= 360; theta++)
 	{
+		glTexCoord2d((cos(theta * PI / 180) + 1) / 2, (sin(theta * PI / 180) + 1) / 2);
 		glVertex3d(center.x + WIDTH / 2 * cos(theta * PI / 180), center.y, center.z + WIDTH / 2 * sin(theta * PI / 180));
 	}
 	glEnd();

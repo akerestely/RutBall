@@ -138,9 +138,11 @@ Texture::Texture(void)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer);
 	free(buffer);
+
+	//Road texture loading
 	buffer = esLoadTGA("Texture/Skybox-005.tga", &tWidth, &tHeight);
-	glGenTextures(8, skyCube+5);
-	glBindTexture(GL_TEXTURE_2D, skyCube[5]);
+	glGenTextures(8, &roadTex);
+	glBindTexture(GL_TEXTURE_2D, roadTex);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

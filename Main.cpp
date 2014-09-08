@@ -21,7 +21,7 @@ Map brasovMap;
 Ball *ball;
 bool up,down,left,right,rotLeft,rotRight, jump;
 int texNr=0;
-Card card(Point(47, 1.0, 15));
+Card card;
 int lastCheckPointKey;
 
 void initGL() 
@@ -36,8 +36,11 @@ void initGL()
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Nice perspective corrections
 	try
 	{
+		
 		brasovMap = Map("Map.xml");
 		ball = new Ball(WIDTH / 8, Point(0, 0, 0));
+		Point checkPointPosition = brasovMap.GetPoint(CHECKPOINT).getCenter();
+		card = Card(Point(checkPointPosition.x, checkPointPosition.y + 0.5, checkPointPosition.z));
 		lastCheckPointKey = STARTPOINT;
 	}
 	catch(char* message)
@@ -162,8 +165,8 @@ void keyboardPressed (unsigned char key, int x, int y)
 		//  case 's':cam.RotateX(5);break;
 	case 'a':rotLeft=true; break;
 	case 'd':rotRight=true; break;
-	case 'w':cam.RotateX(5);break;
-	case 's':cam.RotateX(-5);break;
+	//case 'w':cam.RotateX(5);break;
+	//case 's':cam.RotateX(-5);break;
 	case ' ':jump=true; break;
 	case 't':if(texNr==4)
 				 texNr=0;

@@ -2,6 +2,7 @@
 #include "cmath"
 #include "vector"
 #include "glut.h"
+#include "Texture.h"
 Map::Map(char* fileName)
 {
 	if (!Tools::ReadNodesFromXML(fileName, this->nodes))
@@ -97,36 +98,22 @@ BallStreetPosition Map::BallCollision(int &nodeKey, Point ballCenter)
 		}
 		if (ballInsideStreet(nodeKey, i, ballCenter))
 			return BallStreetPosition::Inside;
-		/*if (lastNodePosition.x == nextNodePosition.x)
-			m = 0;
-		else
-			m = (nextNodePosition.z - lastNodePosition.z) / (nextNodePosition.x - lastNodePosition.x);
-		double factor = lastNodePosition.z - ballCenter.z;
-		double alpha = 1 + m * m;
-		double beta = -2 * ballCenter.x - m * m * lastNodePosition.x + 2 * m * factor;
-		double gama = ballCenter.x * ballCenter.x + m * m * lastNodePosition.x * lastNodePosition.x - 2 * m * lastNodePosition.x * factor + factor * factor - radius * radius; 
-		double delta = beta * beta - 4 * alpha * gama;
-		if (delta == 0)
-			return CircleLineIntersection::Tangent;
-		else if (delta > 0)
-			return CircleLineIntersection::Secant;
-		else
-			continue;*/
-		
 	}
 	return BallStreetPosition::Outside;
 }
 
 void Map::Draw()
 {
-	glMatrixMode(GL_MODELVIEW);
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, texName);
+	Texture tex=Texture::GetInstance();
+    glMatrixMode(GL_MODELVIEW);
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, tex.roadTex);
 	Point first,second;
 	for (std::map<int, Node>::iterator it = this->nodes.begin(); it != this->nodes.end(); ++it)
 	{
 
 		Node currentNode = (*it).second;
+		currentNode.Draw();
 		std::vector<int> destinations=currentNode.getDestinations();
 		for (int i = 0; i < destinations.size(); i++)
 		{
@@ -135,27 +122,21 @@ void Map::Draw()
 			
 			glColor3f(116 / 255., 125 / 255., 135 / 255.);
 			
-			glVertex3d(street.corners[0].x, street.corners[0].y, street.corners[0].z);
-			glVertex3d(street.corners[1].x, street.corners[1].y, street.corners[1].z);
-			glVertex3d(street.corners[2].x, street.corners[2].y, street.corners[2].z);
-			glVertex3d(street.corners[3].x, street.corners[3].y, street.corners[3].z);
+			glTexCoord2d(0, 0);  glVertex3d(street.corners[0].x, street.corners[0].y, street.corners[0].z);
+			glTexCoord2d(0, 10);  glVertex3d(street.corners[1].x, street.corners[1].y, street.corners[1].z);
+			glTexCoord2d(10, 10);  glVertex3d(street.corners[2].x, street.corners[2].y, street.corners[2].z);
+			glTexCoord2d(10, 0);  glVertex3d(street.corners[3].x, street.corners[3].y, street.corners[3].z);
 			glEnd();
 		}
-		currentNode.Draw();
+		
 	}
 	glDisable(GL_TEXTURE_2D);
 }
-Node Map::GetStartPoint()
+Node Map::GetPoint(int key)
 {
-	if (nodes.count(STARTPOINT) == 0)
+	if (nodes.count(key) == 0)
 		return nodes[0];
-	return nodes[STARTPOINT];
-}
-Node Map::GetEndPoint()
-{
-	if (nodes.count(ENDPOINT) == 0)
-		return nodes[0];
-	return nodes[ENDPOINT];
+	return nodes[key];
 }
 bool Map::ballInsideStreet(int firstNodeKey, int adjacentIndex, Point ballCenter)
 {

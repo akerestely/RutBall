@@ -5,6 +5,7 @@
 #include "glut.h"
 #define STARTPOINT 15
 #define ENDPOINT 5
+#define CHECKPOINT 0
 class Map: public Drawable
 {
 	std::map<int, Node> nodes;
@@ -21,6 +22,5 @@ public:
 	Map();
 	void Draw() override;
 	BallStreetPosition BallCollision(int &nodeKey, Point ballCenter);
-	Node GetStartPoint();
-	Node GetEndPoint();
+	Node GetPoint(int key);
 };
