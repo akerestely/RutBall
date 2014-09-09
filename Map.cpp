@@ -104,6 +104,7 @@ BallStreetPosition Map::BallCollision(int &nodeKey, Point ballCenter)
 
 void Map::Draw()
 {
+	
 	Texture tex=Texture::GetInstance();
     glMatrixMode(GL_MODELVIEW);
     glEnable(GL_TEXTURE_2D);
