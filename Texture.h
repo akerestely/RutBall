@@ -12,10 +12,9 @@ private:
 	Texture();
 public:
 	static Texture& GetInstance();
-	GLuint wallTex1;
-	GLuint wallTex2;
 	GLuint ballTex[5];
 	GLuint cardTex[2];
 	GLuint skyCube[6];
 	GLuint roadTex;
+	GLuint textures[10];
 };
