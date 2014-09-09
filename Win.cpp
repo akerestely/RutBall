@@ -11,6 +11,7 @@ Win::Win(Point center)
 
 Win::~Win(void)
 {
+
 }
 
 void Win::SetWin(bool win){

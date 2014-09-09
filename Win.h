@@ -10,7 +10,9 @@ class Win : public Drawable
 public:
 	Win(Point center);
 	~Win(void);
-	Win(){}
+	Win()
+	{
+	}
 	void SetWin(bool win);
 	void Draw();
 };
