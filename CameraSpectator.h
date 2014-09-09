@@ -1,3 +1,4 @@
+#include "Point.h"
 #include <glut.h>		// Need to include it here because the GL* types are required
 #define PI 3.1415265359
 #define PIdiv180 3.1415265359/180.0
@@ -9,6 +10,22 @@
 struct SF3dVector  //Float 3d-vect, normally used
 {
 	GLfloat x,y,z;
+	SF3dVector(double x = 0, double y = 0, double z = 0)
+	{
+		this->x=x;
+		this->y = y;
+		this->z = z;
+	}
+	SF3dVector(Point a, Point b)
+	{
+		x = b.x - a.x;
+		y = b.y - a.y;
+		z = b.z - a.z;
+	}
+	double operator*(const SF3dVector &v)
+	{
+		return x*v.x + y*v.y+z*v.z;
+	}
 };
 struct SF2dVector
 {
@@ -36,7 +53,8 @@ public:
 	void RotateXYZ ( SF3dVector Angles );
 	void MoveZ ( GLfloat Distance );
 	void MoveX ( GLfloat Distance );
-	SF3dVector GetPosition();
+	Point GetPosition();
+	double GetRotY();
 };
 
 

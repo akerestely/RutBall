@@ -49,9 +49,8 @@ void initGL()
 		miniCard=Card(Point(0.95,0.55,-2),true);
 		lastCheckPointKey = STARTPOINT;
 		canWin = false;
-		Point startPos = brasovMap.GetPoint(STARTPOINT).getCenter();
 		Point endPoint = brasovMap.GetPoint(ENDPOINT).getCenter();
-		win = Win(Point(endPoint.x - startPos.x, endPoint.y + 2, endPoint.z - startPos.z));
+		win = Win(Point(endPoint.x, endPoint.y + 2, endPoint.z));
 	}
 	catch(char* message)
 	{
@@ -104,7 +103,7 @@ void timer(int value)
 {
 	glutPostRedisplay();
 	glutTimerFunc(15, timer, 0);
-	SF3dVector center = cam.GetPosition();
+	Point center = cam.GetPosition();
 	//Point center = ball->GetPosition();
 	if (jump)
 	{
@@ -163,7 +162,10 @@ void timer(int value)
 		cam.RotateY(-ROTATION);
 	}
 	skyCube.SetPoz(Point(cam.GetPosition().x,0,cam.GetPosition().z));
-
+	for(int i=0;i<buildings.size();i++) 
+	{
+	   buildings[i].SwitchMode(cam.GetPosition(), -cam.GetRotY());
+   }
 	if (!canWin)
 	{
 		if(lastCheckPointKey == CHECKPOINT)
@@ -174,6 +176,10 @@ void timer(int value)
 		if(lastCheckPointKey == ENDPOINT)
 		{
 			win.SetWin(true);
+		}
+		else
+		{
+			win.SetWin(false);
 		}
 	}
 }
