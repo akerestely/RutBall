@@ -50,54 +50,11 @@ void initGL()
 	{
 		throw message;
 	}
+
 	srand(time(NULL));
-	buildings.push_back(Building(Point(-35.0,0.,-16.0),20,3,16));
-   //__________________________2 ______________________
-   buildings.push_back(Building(Point(-49.0,0.,-22.0),15,2,15));
-   //_____________________3__________
-   buildings.push_back(Building(Point(-55.0,0.,-10.0),15,3,16));
-
-   buildings.push_back(Building(Point(-10.0,0.,2.0),12,3,10));
-   buildings.push_back(Building(Point(8.0,0.,-2.0),10,3,10));
-   buildings.push_back(Building(Point(-56.0,0.,82.0),10,3,-10));
-   buildings.push_back(Building(Point(-64.0,0.,96.0),12,3,-10));
-   buildings.push_back(Building(Point(-72.0,0.,84.0),12,3,-10));
-   buildings.push_back(Building(Point(-85.0,0.,81.0),12,3,-14));
-   buildings.push_back(Building(Point(-98.0,0.,78.0),12,3,-10));
-   buildings.push_back(Building(Point(-111.0,0.,77.0),12,3,-10));
-   buildings.push_back(Building(Point(-125.0,0.,78.0),12,3,-10));
-   buildings.push_back(Building(Point(-139.0,0.,73.0),12,3,-10));
-   buildings.push_back(Building(Point(-152.0,0.,69.0),12,3,-10));
-   buildings.push_back(Building(Point(-165.0,0.,70.0),12,3,-10));
-   buildings.push_back(Building(Point(-178.0,0.,68.0),12,3,-10));
-   buildings.push_back(Building(Point(-190.0,0.,65.0),12,3,-10));
-   buildings.push_back(Building(Point(-197.0,0.,49.50),12,3,-10));
-   buildings.push_back(Building(Point(-178.0,0.,68.0),12,3,-10));
-   buildings.push_back(Building(Point(-86.0,0.,14.0),12,3,10));
-   buildings.push_back(Building(Point(-100.0,0.,17.0),12,3,10));
-   buildings.push_back(Building(Point(-114.0,0.,20.0),12,3,10));
-   buildings.push_back(Building(Point(-128.0,0.,23.0),12,3,10));
-   buildings.push_back(Building(Point(-142.0,0.,26.0),12,3,10));
-   buildings.push_back(Building(Point(-156.0,0.,29.0),12,3,10));
-   buildings.push_back(Building(Point(-170.0,0.,32.0),12,3,10));
-   buildings.push_back(Building(Point(-184.0,0.,35.0),12,3,10));
-   buildings.push_back(Building(Point(-83.0,0.,32.0),12,3,10));
-   buildings.push_back(Building(Point(-97.0,0.,35.0),12,3,10));
-   buildings.push_back(Building(Point(-111.0,0.,38.0),12,3,10));
-   buildings.push_back(Building(Point(-126.0,0.,41.0),12,3,10));
-   buildings.push_back(Building(Point(-138.0,0.,41.0),12,2,10));
-   buildings.push_back(Building(Point(-152.0,0.,52.0),12,3,-10));
-   buildings.push_back(Building(Point(-165.0,0.,50.0),12,3,-10));
-   buildings.push_back(Building(Point(-178.0,0.,51.0),12,2,-10));
-   buildings.push_back(Building(Point(-81.0,0.,53.0),12,3,15));
-   buildings.push_back(Building(Point(-98.0,0.,53.0),12,3,15));
-   buildings.push_back(Building(Point(-111.0,0.,58.0),12,3,-15));
-   buildings.push_back(Building(Point(-125.0,0.,58.0),12,3,-10));
-   buildings.push_back(Building(Point(-139.0,0.,53.0),12,3,-10));
-   buildings.push_back(Building(Point(-152.0,0.,52.0),12,3,-10));
-   buildings.push_back(Building(Point(-165.0,0.,50.0),12,3,-10));
-   buildings.push_back(Building(Point(-178.0,0.,51.0),12,2,-10));
-
+	if(!Tools::ReadBuildingsFromXML("Buildings.xml", buildings))
+		throw "Invalid buildings file!";
+	
 }
 
 void display(void)

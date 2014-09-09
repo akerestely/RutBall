@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<buildings>
+  <building X="-35" Y="0" Z="-16" size="20" type="3" angle="16"/>
+  <building X="-49" Y="0" Z="-22" size="15" type="2" angle="15"/>
+  <building X="-55" Y="0" Z="-10" size="15" type="3" angle="16"/>
+  <building X="-10" Y="0" Z="2" size="12" type="3" angle="10"/>
+  <building X="8" Y="0" Z="-2" size="10" type="3" angle="10"/>
+  <building X="-56" Y="0" Z="82" size="10" type="3" angle="-10"/>
+  <building X="-64" Y="0" Z="96" size="12" type="3" angle="-10"/>
+  <building X="-72" Y="0" Z="84" size="12" type="3" angle="-10"/>
+  <building X="-85" Y="0" Z="81" size="12" type="3" angle="-14"/>
+  <building X="-98" Y="0" Z="78" size="12" type="3" angle="-10"/>
+  <building X="-111" Y="0" Z="77" size="12" type="3" angle="-10"/>
+  <building X="-125" Y="0" Z="78" size="12" type="3" angle="-10"/>
+  <building X="-139" Y="0" Z="73" size="12" type="3" angle="-10"/>
+  <building X="-152" Y="0" Z="69" size="12" type="3" angle="-10"/>
+  <building X="-165" Y="0" Z="70" size="12" type="3" angle="-10"/>
+  <building X="-178" Y="0" Z="68" size="12" type="3" angle="-10"/>
+  <building X="-190" Y="0" Z="65" size="12" type="3" angle="-10"/>
+</buildings>
