@@ -86,16 +86,13 @@ void Card::DrawMiniCard()
  Texture tex=Texture::GetInstance();
  glMatrixMode(GL_MODELVIEW);
  glEnable(GL_TEXTURE_2D);
- //glEnable(GL_CULL_FACE);
- // glEnable(GL_BLEND);
- //glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+
  glBindTexture(GL_TEXTURE_2D, tex.cardTex[0]);
  glPushMatrix();
  glTranslatef(center.x,center.y,center.z);
  glScaled(0.075,0.075,0.075);
  glRotatef(angle, 0., center.y, 0.);
 
- double SCALING=0.2;
  glBegin(GL_QUADS);  
  glColor3f(1.0f, 1.0f, 1.0f);  
  glTexCoord2f(0.0,0.0);
@@ -135,9 +132,7 @@ void Card::DrawMiniCard()
  glPopMatrix();
 
  glPopMatrix();
- //glPopMatrix();
- //glDisable(GL_BLEND);
- //glDisable(GL_CULL_FACE);
+
 
  glDisable(GL_TEXTURE_2D);
 
