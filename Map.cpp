@@ -5,16 +5,25 @@
 #include "Texture.h"
 Map::Map(char* fileName)
 {
+	// Try to load the intersections coordinates of the map
 	if (!Tools::ReadNodesFromXML(fileName, this->nodes))
 	{
 		throw "Cannot load map!";
 	}
+
+	// Initialize map center
 	this->center.x=nodes[STARTPOINT].getCenter().x;
 	this->center.y=nodes[STARTPOINT].getCenter().y;
 	this->center.z=nodes[STARTPOINT].getCenter().z;
+
+	//Translate all of the coordinates with -center.x, -center.y and -center.z to center the map
 	translateToCenter();
+
+	/* Compute coordinates of the streets. Each intersection is represented by a circle and each street is represented by a rectangle.
+	 * To compute the coordinates of the streets is solved the system composed of equation of a line and of a circle.
+	 * The system is solved twice for both of the ends of a street. One end of a street is a line perpendicular on the line between two intersections.
+	**/
 	computeStreets();
-	textureRoad();
 }
 
 void Map::computeStreets()
@@ -48,6 +57,7 @@ void Map::translateToCenter()
 Map::Map()
 {
 }
+
 void Map::getIntersection(Node first, Node second, Point &firstPoint, Point &secondPoint)
 {
 	Point firstCenter = first.getCenter();
@@ -75,10 +85,15 @@ void Map::getIntersection(Node first, Node second, Point &firstPoint, Point &sec
 	secondPoint.y = firstCenter.y;
 }
 
+
 BallStreetPosition Map::BallCollision(int &nodeKey, Point ballCenter)
 {
+	//Get the coordinates of the intersection with id "nodeKey"
 	Point lastNodePosition = nodes[nodeKey].getCenter();
+	//Get the radius of the ball
 	double radius = WIDTH / 8;
+
+	//Check if the tha ball is inside of the intersection
 	double insideNode = radius + sqrt((ballCenter.x - lastNodePosition.x) * (ballCenter.x - lastNodePosition.x) + (ballCenter.z - lastNodePosition.z) * (ballCenter.z - lastNodePosition.z));
 	if (insideNode <= WIDTH / 2)
 	{
@@ -89,35 +104,43 @@ BallStreetPosition Map::BallCollision(int &nodeKey, Point ballCenter)
 
 	for (int i = 0; i < destinations.size(); i++)
 	{
+		//Get the coordinates of an adjacent intersection
 		Point nextNodePosition = nodes[destinations[i]].getCenter();
+
+		//Check if the tha ball is inside of the adjacent intersection
 		insideNode = radius + sqrt((ballCenter.x - nextNodePosition.x) * (ballCenter.x - nextNodePosition.x) + (ballCenter.z - nextNodePosition.z) * (ballCenter.z - nextNodePosition.z));
 		if (insideNode <= WIDTH / 2)
 		{
 			nodeKey = destinations[i];
 			return BallStreetPosition::Inside;
 		}
+		//Check if the ball is inside the street between two intersections
 		if (ballInsideStreet(nodeKey, i, ballCenter))
 			return BallStreetPosition::Inside;
 	}
+	
 	return BallStreetPosition::Outside;
 }
 
 void Map::Draw()
 {
-	
+	// Sets the texture to draw the streets.
 	Texture tex=Texture::GetInstance();
     glMatrixMode(GL_MODELVIEW);
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, tex.roadTex);
 	Point first,second;
+
 	for (std::map<int, Node>::iterator it = this->nodes.begin(); it != this->nodes.end(); ++it)
 	{
 
 		Node currentNode = (*it).second;
+		//Draw current intersection
 		currentNode.Draw();
 		std::vector<int> destinations=currentNode.getDestinations();
 		for (int i = 0; i < destinations.size(); i++)
 		{
+			//Take the coordinates of a street and draw a quad between that points
 			glBegin(GL_QUADS);
 			Street street = currentNode.GetStreet(i);
 			
@@ -139,6 +162,7 @@ Node Map::GetPoint(int key)
 		return nodes[0];
 	return nodes[key];
 }
+
 bool Map::ballInsideStreet(int firstNodeKey, int adjacentIndex, Point ballCenter)
 {
 	double radius = WIDTH / 8;
@@ -203,17 +227,4 @@ bool Map::centerInsideStreet(Street street, Point ballCenter)
 double Map::getLength(Point A, Point B)
 {
 	return sqrt((A.x - B.x) * (A.x - B.x) + (A.z - B.z) * (A.z - B.z));
-}
-void Map::textureRoad()
-{	
-	 int width,height;
-	 char* buffer = Tools::esLoadTGA("Texture/football.tga",&width,&height);
-	 glGenTextures ( 1, &texName);
-	 glBindTexture ( GL_TEXTURE_2D, texName);
-	 glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-	 glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-	 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP); 
-	 glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, width, height, 0,  GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer ); 
-	 free ( buffer );
-
 }
