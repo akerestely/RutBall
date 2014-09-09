@@ -6,9 +6,13 @@
 class Card : public Drawable
 {
 	double angle;
+	bool isMiniCard;
 public:
-	Card(Point center);
+	Card(Point center,bool isMiniCard);
 	Card(){}
+	
 	~Card(void);
 	void Draw();
+	void DrawBigCard();
+	void DrawMiniCard();
 };

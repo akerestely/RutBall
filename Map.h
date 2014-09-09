@@ -3,7 +3,7 @@
 #include "map"
 #include "Tools.h"
 #include "glut.h"
-#define STARTPOINT 5
+#define STARTPOINT 15
 #define ENDPOINT 5
 #define CHECKPOINT 0
 class Map: public Drawable

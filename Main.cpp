@@ -22,9 +22,11 @@ Map brasovMap;
 Ball *ball;
 bool up,down,left,right,rotLeft,rotRight, jump;
 int texNr=0;
-Card card;
+Card card,miniCard;
 int lastCheckPointKey;
 std::vector<Building> buildings;
+bool canWin;
+
 
 void initGL() 
 {
@@ -43,8 +45,10 @@ void initGL()
 		brasovMap = Map("Map.xml");
 		ball = new Ball(WIDTH / 8, Point(0, 0, 0));
 		Point checkPointPosition = brasovMap.GetPoint(CHECKPOINT).getCenter();
-		card = Card(Point(checkPointPosition.x, checkPointPosition.y + 0.5, checkPointPosition.z));
+		card = Card(Point(checkPointPosition.x, checkPointPosition.y + 0.5, checkPointPosition.z),false);
+		miniCard=Card(Point(0.95,0.55,-2),true);
 		lastCheckPointKey = STARTPOINT;
+		canWin = false;
 	}
 	catch(char* message)
 	{
@@ -65,20 +69,31 @@ void display(void)
    
    glLoadIdentity();                 // Reset the model-view matrix
 
+   if(canWin)
+      miniCard.Draw();
+  
    glTranslatef(0.0f, -1.0f, -10.0f); 
    glRotatef(5.0,1,0,0);
-
+	
+  
    ball->SetTexNr(texNr);
    ball->Draw();
    cam.Render();
    skyCube.Draw();
 
    brasovMap.Draw();
-   card.Draw();
-  
+   
+   if(!canWin)
+	  card.Draw();
+	
+   Point startPos = brasovMap.GetPoint(STARTPOINT).getCenter();
+   Point endPos = brasovMap.GetPoint(ENDPOINT).getCenter();
+   glPushMatrix();
+   glTranslated(endPos.x - startPos.x, startPos.y, endPos.z - startPos.z);
    for(int i=0;i<buildings.size();i++) {
 	   buildings[i].Draw();
    }
+   glPopMatrix();
   
    glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
 }
@@ -145,6 +160,19 @@ void timer(int value)
 		cam.RotateY(-ROTATION);
 	}
 	skyCube.SetPoz(Point(cam.GetPosition().x,0,cam.GetPosition().z));
+
+	if (!canWin)
+	{
+		if(lastCheckPointKey == CHECKPOINT)
+			canWin = true;
+	}
+	else
+	{
+		if(lastCheckPointKey == ENDPOINT)
+		{
+			MessageBox(NULL, (LPCWSTR)L"You won!!!", (LPCWSTR)L"Games end", MB_ICONINFORMATION);
+		}
+	}
 }
 
 void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integer
