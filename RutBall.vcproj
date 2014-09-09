@@ -187,6 +187,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Card.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Drawable.cpp"
 				>
 			</File>
@@ -207,11 +211,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SkyCube.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Texture.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\Tools.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Win.cpp"
 				>
 			</File>
 		</Filter>
@@ -237,6 +249,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Card.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Drawable.h"
 				>
 			</File>
@@ -253,11 +269,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SkyCube.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Texture.h"
 				>
 			</File>
 			<File
 				RelativePath=".\Tools.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Win.h"
 				>
 			</File>
 		</Filter>
@@ -267,6 +291,10 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 		</Filter>
+		<File
+			RelativePath=".\Buildings.xml"
+			>
+		</File>
 		<File
 			RelativePath=".\Map.xml"
 			>

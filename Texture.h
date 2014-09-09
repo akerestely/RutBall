@@ -1,7 +1,9 @@
 #pragma once
+#include <vector>
 #include <stdlib.h> 
 #include <iostream>
 #include <glut.h>
+
 
 class Texture
 {
@@ -10,7 +12,11 @@ private:
 	Texture();
 public:
 	static Texture& GetInstance();
-	GLuint wallTex1;
-	GLuint wallTex2;
-	GLuint ball;
+	GLuint ballTex[5];
+	GLuint cardTex[2];
+	GLuint skyCube[6];
+	GLuint roadTex;
+	GLuint textures[10];
+	GLuint doorTex;
+	GLuint winTex;
 };
