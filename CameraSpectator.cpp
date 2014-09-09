@@ -1,5 +1,6 @@
 #include "math.h"
 #include "CameraSpectator.h"
+
 SF3dVector F3dVector ( GLfloat x, GLfloat y, GLfloat z )
 {
 	SF3dVector tmp;
@@ -102,4 +103,9 @@ void CCamera::MoveX ( GLfloat Distance )
 Point CCamera::GetPosition()
 {
 	return Point(Position.x, Position.y, Position.z);
+}
+
+double CCamera::GetRotY()
+{
+	return RotatedY;
 }

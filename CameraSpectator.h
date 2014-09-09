@@ -10,10 +10,27 @@
 struct SF3dVector  //Float 3d-vect, normally used
 {
 	GLfloat x,y,z;
+	SF3dVector(double x = 0, double y = 0, double z = 0)
+	{
+		this->x=x;
+		this->y = y;
+		this->z = z;
+	}
+	SF3dVector(Point a, Point b)
+	{
+		x = b.x - a.x;
+		y = b.y - a.y;
+		z = b.z - a.z;
+	}
+	double operator*(const SF3dVector &v)
+	{
+		return x*v.x + y*v.y+z*v.z;
+	}
 };
 struct SF2dVector
 {
 	GLfloat x,y;
+	
 };
 
 class CCamera
@@ -38,6 +55,7 @@ public:
 	void MoveZ ( GLfloat Distance );
 	void MoveX ( GLfloat Distance );
 	Point GetPosition();
+	double GetRotY();
 };
 
 

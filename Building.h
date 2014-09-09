@@ -15,7 +15,7 @@ private:
 public:
 	Building(Point center,double size, int type);
 	Building(Point center,double l, double w,double h,double size);
-	void SwitchMode(Point p);
+	void SwitchMode(Point p,double rotY);
 	void Draw();
 	~Building(void);
 };

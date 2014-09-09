@@ -21,8 +21,6 @@ Building build1 = Building(Point(1.35, 0., 1.3), 8, 2);
 Building build2 = Building(Point(5.2, 0., 2.2), 8, 2);
 Building build3 = Building(Point(20.2, 0., 18.2), 20, 3);
 
-
-
 void initGL() {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
 	glClearDepth(1.0f);                   // Set background depth to farthest
@@ -72,9 +70,9 @@ void timer(int value)
 {
 	glutPostRedisplay();
 	glutTimerFunc(15, timer, 0);
-	build1.SwitchMode(cam.GetPosition());
-	build2.SwitchMode(cam.GetPosition());
-	build3.SwitchMode(cam.GetPosition());
+	build1.SwitchMode(cam.GetPosition(), -cam.GetRotY());
+	build2.SwitchMode(cam.GetPosition(), -cam.GetRotY());
+	build3.SwitchMode(cam.GetPosition(), -cam.GetRotY());
 	if(jump)
 		ball->Jump(jump);
 	if(left)
