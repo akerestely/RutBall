@@ -12,6 +12,7 @@
 #include "Ball.h"
 #include "Card.h"
 #include "SkyCube.h"
+#include "Win.h"
 
 #define SPEED 0.3
 #define ROTATION 3
@@ -26,8 +27,7 @@ Card card,miniCard;
 int lastCheckPointKey;
 std::vector<Building> buildings;
 bool canWin;
-
-
+Win win;
 void initGL() 
 {
  	
@@ -49,6 +49,9 @@ void initGL()
 		miniCard=Card(Point(0.95,0.55,-2),true);
 		lastCheckPointKey = STARTPOINT;
 		canWin = false;
+		Point startPos = brasovMap.GetPoint(STARTPOINT).getCenter();
+		Point endPoint = brasovMap.GetPoint(ENDPOINT).getCenter();
+		win = Win(Point(endPoint.x - startPos.x, endPoint.y + 2, endPoint.z - startPos.z));
 	}
 	catch(char* message)
 	{
@@ -80,7 +83,7 @@ void display(void)
    ball->Draw();
    cam.Render();
    skyCube.Draw();
-
+   win.Draw();
    brasovMap.Draw();
    
    if(!canWin)
@@ -170,7 +173,7 @@ void timer(int value)
 	{
 		if(lastCheckPointKey == ENDPOINT)
 		{
-			MessageBox(NULL, (LPCWSTR)L"You won!!!", (LPCWSTR)L"Games end", MB_ICONINFORMATION);
+			win.SetWin(true);
 		}
 	}
 }

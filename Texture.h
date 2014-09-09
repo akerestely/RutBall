@@ -17,4 +17,6 @@ public:
 	GLuint skyCube[6];
 	GLuint roadTex;
 	GLuint textures[10];
+	GLuint doorTex;
+	GLuint winTex;
 };

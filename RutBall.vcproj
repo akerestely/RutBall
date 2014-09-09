@@ -222,6 +222,10 @@
 				RelativePath=".\Tools.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\Win.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -274,6 +278,10 @@
 			</File>
 			<File
 				RelativePath=".\Tools.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Win.h"
 				>
 			</File>
 		</Filter>

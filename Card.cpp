@@ -74,7 +74,7 @@ void Card::DrawBigCard()
 	glPopMatrix();
 
 	glPopMatrix();
-	glPopMatrix();
+	//glPopMatrix();
 	glDisable(GL_TEXTURE_2D);
 }
 
@@ -135,7 +135,7 @@ void Card::DrawMiniCard()
  glPopMatrix();
 
  glPopMatrix();
- glPopMatrix();
+ //glPopMatrix();
  //glDisable(GL_BLEND);
  //glDisable(GL_CULL_FACE);
 

@@ -8,7 +8,7 @@ Building::Building(Point center,double size, int type,double angleOfRotation)
 :Drawable(center),size(size),type(type),angleOfRotation(angleOfRotation)
 {
 	
-	int mytime = rand()%3;
+	int mytime = rand()%5;
 	Texture tex=Texture::GetInstance();
 	myTexture = tex.textures[mytime];
 }
