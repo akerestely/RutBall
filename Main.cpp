@@ -1,4 +1,5 @@
 #include <Windows.h>
+#include <ctime>
 #include "iostream"
 #include <glut.h>
 #include <stdlib.h>
@@ -9,21 +10,27 @@
 #include "Map.h"
 #include "Building.h"
 #include "Ball.h"
+#include "Card.h"
+#include "SkyCube.h"
+#include "Win.h"
 
 #define SPEED 0.3
 #define ROTATION 3
 
 CCamera cam;
+SkyCube skyCube;
 Map brasovMap;
 Ball *ball;
 bool up,down,left,right,rotLeft,rotRight, jump;
-Building build1 = Building(Point(1.35, 0., 1.3), 8, 2);
-Building build2 = Building(Point(5.2, 0., 2.2), 8, 2);
-Building build3 = Building(Point(20.2, 0., 18.2), 20, 3);
-
-
-
-void initGL() {
+int texNr=0;
+Card card,miniCard;
+int lastCheckPointKey;
+std::vector<Building> buildings;
+bool canWin;
+Win win;
+void initGL() 
+{
+ 	
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
 	glClearDepth(1.0f);                   // Set background depth to farthest
 	glEnable(GL_DEPTH_TEST);   // Enable depth testing for z-culling
@@ -32,15 +39,28 @@ void initGL() {
 	glEnable(GL_BLEND);
 	glShadeModel(GL_SMOOTH);   // Enable smooth shading
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Nice perspective corrections
-	/*try
+	try
 	{
+		
 		brasovMap = Map("Map.xml");
+		ball = new Ball(WIDTH / 8, Point(0, 0, 0));
+		Point checkPointPosition = brasovMap.GetPoint(CHECKPOINT).getCenter();
+		card = Card(Point(checkPointPosition.x, checkPointPosition.y + 0.5, checkPointPosition.z),false);
+		miniCard=Card(Point(0.95,0.55,-2),true);
+		lastCheckPointKey = STARTPOINT;
+		canWin = true;
+		Point endPoint = brasovMap.GetPoint(ENDPOINT).getCenter();
+		win = Win(Point(endPoint.x, endPoint.y + 2, endPoint.z));
 	}
 	catch(char* message)
 	{
 		throw message;
-	}*/
-	ball=new Ball(WIDTH/4,Point(0,0,0));
+	}
+
+	srand(time(NULL));
+	if(!Tools::ReadBuildingsFromXML("Buildings.xml", buildings))
+		throw "Invalid buildings file!";
+	
 }
 
 void display(void)
@@ -51,51 +71,87 @@ void display(void)
    
    glLoadIdentity();                 // Reset the model-view matrix
 
+   if(canWin)
+      miniCard.Draw();
+  
    glTranslatef(0.0f, -1.0f, -10.0f); 
-   glRotatef(10.0,1,0,0);
-
+   glRotatef(5.0,1,0,0);
+	
+  
+   ball->SetTexNr(texNr);
    ball->Draw();
    cam.Render();
+   skyCube.Draw();
+   win.Draw();
    brasovMap.Draw();
-
-//	Building build1=Building(Point(1.35,0.,1.3),8,2);
-	build1.Draw();	
-//	Building build2=Building(Point(5.2,0.,2.2),8,2);
-	build2.Draw();
-//	Building build3=Building(Point(20.2,0.,18.2),20,3);
-	build3.Draw();
-
-    glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
+   
+   if(!canWin)
+	  card.Draw();
+	
+   Point startPos = brasovMap.GetPoint(STARTPOINT).getCenter();
+   Point endPos = brasovMap.GetPoint(ENDPOINT).getCenter();
+   glPushMatrix();
+   glTranslated(endPos.x - startPos.x, startPos.y, endPos.z - startPos.z);
+   for(int i=0;i<buildings.size();i++) {
+	   buildings[i].Draw();
+   }
+   glPopMatrix();
+  
+   glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
 }
-
 void timer(int value) 
 {
 	glutPostRedisplay();
 	glutTimerFunc(15, timer, 0);
-	build1.SwitchMode(cam.GetPosition());
-	build2.SwitchMode(cam.GetPosition());
-	build3.SwitchMode(cam.GetPosition());
-	if(jump)
+	Point center = cam.GetPosition();
+	//Point center = ball->GetPosition();
+	if (jump)
+	{
 		ball->Jump(jump);
-	if(left)
+	}
+	if (left)
 	{
 		cam.MoveX(-SPEED); 
 		ball->MoveX(-SPEED);
+		center = cam.GetPosition();
+		if (brasovMap.BallCollision(lastCheckPointKey, Point(center.x, center.y, center.z)) == BallStreetPosition::Outside)
+		{
+			cam.MoveX(SPEED); 
+			ball->MoveX(SPEED);
+		}		
 	}
-	if(right)
+	if (right)
 	{
 		cam.MoveX(SPEED); 
 		ball->MoveX(SPEED);
+		center = cam.GetPosition();
+		if (brasovMap.BallCollision(lastCheckPointKey, Point(center.x, center.y, center.z)) == BallStreetPosition::Outside)
+		{
+			cam.MoveX(-SPEED);
+			ball->MoveX(-SPEED);
+		}
 	}
-	if(up)
+	if (up)
 	{
 		cam.MoveZ(-SPEED); 
 		ball->MoveZ(SPEED);
+		center = cam.GetPosition();
+		if (brasovMap.BallCollision(lastCheckPointKey, Point(center.x, center.y, center.z)) == BallStreetPosition::Outside)
+		{
+			cam.MoveZ(SPEED);
+			ball->MoveZ(-SPEED);
+		}
 	}
-	if(down)
+	if (down)
 	{
-		cam.MoveZ(SPEED);
+		cam.MoveZ(SPEED); 
 		ball->MoveZ(-SPEED);
+		center = cam.GetPosition();
+		if (brasovMap.BallCollision(lastCheckPointKey, Point(center.x, center.y, center.z)) == BallStreetPosition::Outside)
+		{
+			cam.MoveZ(-SPEED);
+			ball->MoveZ(SPEED);
+		}
 	}
 	if(rotLeft)
 	{
@@ -104,6 +160,27 @@ void timer(int value)
 	if(rotRight)
 	{
 		cam.RotateY(-ROTATION);
+	}
+	skyCube.SetPoz(Point(cam.GetPosition().x,0,cam.GetPosition().z));
+	for(int i=0;i<buildings.size();i++) 
+	{
+	   buildings[i].SwitchMode(cam.GetPosition(), -cam.GetRotY());
+   }
+	if (!canWin)
+	{
+		if(lastCheckPointKey == CHECKPOINT)
+			canWin = true;
+	}
+	else
+	{
+		if(lastCheckPointKey == ENDPOINT)
+		{
+			win.SetWin(true);
+		}
+		else
+		{
+			win.SetWin(false);
+		}
 	}
 }
 
@@ -130,7 +207,14 @@ void keyboardPressed (unsigned char key, int x, int y)
 		//  case 's':cam.RotateX(5);break;
 	case 'a':rotLeft=true; break;
 	case 'd':rotRight=true; break;
+	//case 'w':cam.RotateX(5);break;
+	//case 's':cam.RotateX(-5);break;
 	case ' ':jump=true; break;
+	case 't':if(texNr==4)
+				 texNr=0;
+			 else
+			     texNr++;
+			 break;
 	}
 }
 void keyboardReleased (unsigned char key, int x, int y)

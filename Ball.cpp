@@ -1,5 +1,6 @@
 #include "Ball.h"
 #include "windows.h"
+#include "Texture.h"
 
 
 Ball::~Ball(void)
@@ -7,7 +8,7 @@ Ball::~Ball(void)
 }
 
 Ball::Ball(float radius, Point center)
-	: Drawable(center)
+: Drawable(center)
 {			
 	        this->oldY=center.y;
 			this->boolX=false;
@@ -50,17 +51,22 @@ Ball::Ball(float radius, Point center)
 					*i++ = (r+1) * sectors + (s+1);
 					*i++ = (r+1) * sectors + s;
 			}
-			textureBall();
 			canJump=true;
-
 }
+
+void Ball::SetTexNr(int nr){
+	this->texnr=nr;
+}
+
+
 void Ball::Draw()
 {
+		Texture tex=Texture::GetInstance();
         glMatrixMode(GL_MODELVIEW);
 		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, texName);
+		glBindTexture(GL_TEXTURE_2D, tex.ballTex[texnr]);
         glPushMatrix();
-		glTranslatef(this->center.x, this->center.y, this->center.z);
+		glTranslatef(this->center.x, this->center.y - 0.5, this->center.z);
 
 		if(this->boolZ==true)
 		{
@@ -125,16 +131,3 @@ void Ball::Jump(bool &isJump)
 	}
 }
 
-void Ball::textureBall()
-{	
-	 int width,height;
-	 char* buffer = Tools::esLoadTGA("Texture/football.tga",&width,&height);
-	 glGenTextures ( 1, &texName);
-	 glBindTexture ( GL_TEXTURE_2D, texName);
-	 glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-	 glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-	 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP); 
-	 glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, width, height, 0,  GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer ); 
-	 free ( buffer );
-
-}
