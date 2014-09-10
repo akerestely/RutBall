@@ -61,4 +61,10 @@
 	<arc from="24" to="25" />
 	<arc from="25" to="7" />
    </arcs>
+  <buildings>
+    <builduing X="" Y="" Z="" size="" type="" angle=""/>
+    <builduing X="" Y="" Z="" size="" type="" angle=""/>
+    <builduing X="" Y="" Z="" size="" type="" angle=""/>
+    <builduing X="" Y="" Z="" size="" type="" angle=""/>
+  </buildings>
 </map>

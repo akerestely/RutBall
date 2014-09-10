@@ -10,10 +10,9 @@ Ball::~Ball(void)
 Ball::Ball(float radius, Point center)
 : Drawable(center)
 {			
-	        this->oldY=center.y;
 			this->boolX=false;
 			this->boolZ=false;
-			alphaX=0, rotY=0, alphaZ=0;
+			alphaX=0,alphaZ=0;
 			float const R = 1./(float)(rings-1);
 			float const S = 1./(float)(sectors-1);
 			int r, s;

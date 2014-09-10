@@ -222,6 +222,10 @@
 				RelativePath=".\Tools.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\Win.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -276,6 +280,10 @@
 				RelativePath=".\Tools.h"
 				>
 			</File>
+			<File
+				RelativePath=".\Win.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -283,6 +291,10 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 		</Filter>
+		<File
+			RelativePath=".\Buildings.xml"
+			>
+		</File>
 		<File
 			RelativePath=".\Map.xml"
 			>

@@ -119,6 +119,17 @@ Texture::Texture(void)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer);
 	free(buffer);
 
+		 //ground loading
+ buffer = esLoadTGA("Texture/iarba1.tga", &tWidth, &tHeight);
+ glGenTextures(9, &skyCube[5]);
+ glBindTexture(GL_TEXTURE_2D, skyCube[5]);
+ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+ glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer);
+	free(buffer);
+
 	//Road texture loading
 	buffer = esLoadTGA("Texture/Skybox-005.tga", &tWidth, &tHeight);
 	glGenTextures(8, &roadTex);
@@ -159,6 +170,68 @@ Texture::Texture(void)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer);
 	free(buffer);
+
+	buffer = esLoadTGA("Texture/003-1.tga", &tWidth, &tHeight);
+	glGenTextures(2, &textures[3]);
+	glBindTexture(GL_TEXTURE_2D, textures[3]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+	free(buffer);
+
+	buffer = esLoadTGA("Texture/004-1.tga", &tWidth, &tHeight);
+	glGenTextures(2, &textures[4]);
+	glBindTexture(GL_TEXTURE_2D, textures[4]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+	free(buffer);
+
+	buffer = esLoadTGA("Texture/door2.tga", &tWidth, &tHeight);
+	glGenTextures(1, &doorTex);
+	glBindTexture(GL_TEXTURE_2D, doorTex);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+	free(buffer);
+
+	buffer = esLoadTGA("Texture/win.tga", &tWidth, &tHeight);
+	glGenTextures(1, &winTex);
+	glBindTexture(GL_TEXTURE_2D, winTex);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer);
+	free(buffer);
+
+	 buffer = esLoadTGA("Texture/005-1.tga", &tWidth, &tHeight);
+	 glGenTextures(2, &textures[5]);
+	 glBindTexture(GL_TEXTURE_2D, textures[5]);
+	 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+	 free(buffer);
+
+	 buffer = esLoadTGA("Texture/006-1.tga", &tWidth, &tHeight);
+	 glGenTextures(2, &textures[6]);
+	 glBindTexture(GL_TEXTURE_2D, textures[6]);
+	 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+	 free(buffer);
+
+
 }
 
 char* Texture::esLoadTGA(char *fileName, double *width, double *height)
