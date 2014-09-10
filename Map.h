@@ -6,6 +6,10 @@
 #define STARTPOINT 5
 #define ENDPOINT 5
 #define CHECKPOINT 0
+
+/* A class which represent a map. A map is represented by a list of intersections 
+ * This class inherit the abstract class Drawable.
+**/
 class Map: public Drawable
 {
 	std::map<int, Node> nodes;/*!< A map which contain the coordinats of the map intersections. Each intersection has an unique id */
@@ -26,7 +30,7 @@ public:
 	/* Default constructor
 	**/
 	Map();
-	/* A method which draws the map. To draw intersections are used circles and to draw the streets are used quads.
+	/* An inherit method which draws the map. To draw intersections are used circles and to draw the streets are used quads.
 	* @see Node.Draw()
 	**/
 	void Draw() override;

@@ -113,26 +113,3 @@ int Tools::ReadBuildingsFromXML(char *fileName, std::vector<Building> &buildings
 	fclose(fo);
 	return 1;
 }
-
-Tools::~Tools(void)
-{
-}
-
-
-typedef struct
-{
-        unsigned char IdSize,
-                MapType,
-                ImageType;
-        unsigned short PaletteStart,
-                PaletteSize;
-        unsigned char PaletteEntryDepth;
-        unsigned short X,
-                Y,
-                Width,
-                Height;
-        unsigned char ColorDepth,
-                Descriptor;
-
-} TGA_HEADER;
-

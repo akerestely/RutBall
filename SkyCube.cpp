@@ -9,7 +9,6 @@ void SkyCube::Draw()
 {	
 	Texture tex=Texture::GetInstance();
 	glEnable(GL_TEXTURE_2D);
-	//glDisable(GL_DEPTH_TEST);
 
 	//Front
 	glBindTexture(GL_TEXTURE_2D,tex.skyCube[0]);
@@ -59,12 +58,11 @@ void SkyCube::Draw()
 	//Bottom
 	glBindTexture(GL_TEXTURE_2D,tex.skyCube[5]);
 	glBegin(GL_QUADS);
-		glTexCoord2f(0, 0); glVertex3f( -DIST_FROM_SKY*5, -0.1, -DIST_FROM_SKY*10 );
-		glTexCoord2f(0, GROUND_TEXTURE_MULTIPLIER); glVertex3f( -DIST_FROM_SKY*5, -0.1,  DIST_FROM_SKY*10 );
-		glTexCoord2f(GROUND_TEXTURE_MULTIPLIER, GROUND_TEXTURE_MULTIPLIER); glVertex3f(  DIST_FROM_SKY*5, -0.1,  DIST_FROM_SKY*5 );
-		glTexCoord2f(GROUND_TEXTURE_MULTIPLIER, 0); glVertex3f( DIST_FROM_SKY*5, -0.1, -DIST_FROM_SKY*5);
+		glTexCoord2f(0, 0); glVertex3f( -SIZE_OF_GROUND, -0.1, -SIZE_OF_GROUND );
+		glTexCoord2f(0, GROUND_TEXTURE_MULTIPLIER); glVertex3f( -SIZE_OF_GROUND, -0.1,  SIZE_OF_GROUND);
+		glTexCoord2f(GROUND_TEXTURE_MULTIPLIER, GROUND_TEXTURE_MULTIPLIER); glVertex3f(  SIZE_OF_GROUND, -0.1,  SIZE_OF_GROUND );
+		glTexCoord2f(GROUND_TEXTURE_MULTIPLIER, 0); glVertex3f( SIZE_OF_GROUND, -0.1, -SIZE_OF_GROUND);
 	glEnd();
-	glEnable(GL_DEPTH_TEST);
 }
 void SkyCube::SetPoz(Point p)
 {
