@@ -221,7 +221,8 @@ Texture::Texture(void)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, buffer);
 	free(buffer);
-
+	
+	//doors texture loading
 	buffer = esLoadTGA("Texture/door2.tga", &tWidth, &tHeight);
 	glGenTextures(1, &doorTex);
 	glBindTexture(GL_TEXTURE_2D, doorTex);
@@ -231,7 +232,8 @@ Texture::Texture(void)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, buffer);
 	free(buffer);
-
+	
+	//"you win" texture loading
 	buffer = esLoadTGA("Texture/win.tga", &tWidth, &tHeight);
 	glGenTextures(1, &winTex);
 	glBindTexture(GL_TEXTURE_2D, winTex);

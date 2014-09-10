@@ -1,6 +1,6 @@
 #pragma once
 #define PI 3.14159265359
-#define WIDTH 4.0
+#define BALL_RADIUS 4.0
 
 class Point
 {

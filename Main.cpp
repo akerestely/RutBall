@@ -43,7 +43,7 @@ void initGL()
 	{
 		
 		brasovMap = Map("Map.xml");
-		ball = new Ball(WIDTH / 8, Point(0, 0, 0));
+		ball = new Ball(BALL_RADIUS / 8, Point(0, 0, 0));
 		Point checkPointPosition = brasovMap.GetPoint(CHECKPOINT).getCenter();
 		card = Card(Point(checkPointPosition.x, checkPointPosition.y + 0.5, checkPointPosition.z),false);
 		miniCard=Card(Point(0.95,0.55,-2),true);

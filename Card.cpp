@@ -1,7 +1,7 @@
 #include "Texture.h"
 #include "Card.h"
-#define WIDTH 1.5
-#define HEIGHT 2.5
+#define CARD_WIDTH 1.5
+#define CARD_HEIGHT 2.5
 
 Card::Card(Point center,bool isMiniCard)
 :Drawable(center)
@@ -38,13 +38,13 @@ void Card::DrawBigCard()
 	glBegin(GL_QUADS);  
 	glColor3f(1.0f, 1.0f, 1.0f);  
 	glTexCoord2f(0.0,0.0);
-	glVertex3f(-WIDTH/2, center.y,0);
+	glVertex3f(-CARD_WIDTH/2, center.y,0);
 	glTexCoord2f(1.0,0.0);
-	glVertex3f(+WIDTH/2, center.y,0);
+	glVertex3f(+CARD_WIDTH/2, center.y,0);
 	glTexCoord2f(1.0,1.0);
-	glVertex3f(+WIDTH/2, center.y+HEIGHT,  0);
+	glVertex3f(+CARD_WIDTH/2, center.y+CARD_HEIGHT,  0);
 	glTexCoord2f(0.0,1.0);
-	glVertex3f(-WIDTH/2, center.y+HEIGHT,  0);
+	glVertex3f(-CARD_WIDTH/2, center.y+CARD_HEIGHT,  0);
 	glEnd();
 	
 	double distanceToGroundUnit=center.y/11;
@@ -96,13 +96,13 @@ void Card::DrawMiniCard()
  glBegin(GL_QUADS);  
  glColor3f(1.0f, 1.0f, 1.0f);  
  glTexCoord2f(0.0,0.0);
- glVertex3f(-WIDTH/2, center.y,0);
+ glVertex3f(-CARD_WIDTH/2, center.y,0);
  glTexCoord2f(1.0,0.0);
- glVertex3f(+WIDTH/2, center.y,0);
+ glVertex3f(+CARD_WIDTH/2, center.y,0);
  glTexCoord2f(1.0,1.0);
- glVertex3f(+WIDTH/2, (center.y+HEIGHT),  0);
+ glVertex3f(+CARD_WIDTH/2, (center.y+CARD_HEIGHT),  0);
  glTexCoord2f(0.0,1.0);
- glVertex3f(-WIDTH/2, (center.y+HEIGHT),  0);
+ glVertex3f(-CARD_WIDTH/2, (center.y+CARD_HEIGHT),  0);
  glEnd();
 
  double distanceToGroundUnit=center.y/11;

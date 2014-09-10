@@ -22,7 +22,7 @@ void Node::Draw()
 	for(int theta = 0; theta <= 360; theta++)
 	{
 		glTexCoord2d((cos(theta * PI / 180) + 1) / 2, (sin(theta * PI / 180) + 1) / 2);
-		glVertex3d(center.x + WIDTH / 2 * cos(theta * PI / 180), center.y, center.z + WIDTH / 2 * sin(theta * PI / 180));
+		glVertex3d(center.x + BALL_RADIUS / 2 * cos(theta * PI / 180), center.y, center.z + BALL_RADIUS / 2 * sin(theta * PI / 180));
 	}
 	glEnd();
 	glColor3f(1, 1, 1);

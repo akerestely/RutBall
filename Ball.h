@@ -1,7 +1,3 @@
-/**
-* Class used to design and control a ball. The ball has a texture, it can rotate to right and to left, forward and backward and it can jump. 
-*/
-
 #pragma once
 #include <vector>   /*!< Used to store GLfloat values for vertices, normals, indices and texture coordinates. */
 #include "glut.h"   /*!< OpenGL Utility Toolkit. */
@@ -12,6 +8,9 @@
 #define POWER 0.5   /*!<The double value used to increase the y coordinate of the ball when it jumps. */
 #define GRAVITY 0.05   /*!<The double value used to repeatedly decrease the y coordinate of the ball after the jump(when is falling). */
 
+/**
+* Class used to design and control a ball. The ball has a texture, it can rotate to right and to left, forward and backward and it can jump. 
+*/
 class Ball : public Drawable
 {
 private:

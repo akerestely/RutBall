@@ -1,12 +1,11 @@
-/**
-* Class used to load, generate and bind all textures used in this project. The compatible format for textures is tga.
-* The class uses the singleton design pattern; it can be instantiated only once, so the textures will be loaded only once during the game.
-*/
 #pragma once
 #include <iostream>
 #include <glut.h> /*!< OpenGL Utility Toolkit. */
 
-
+/**
+* Class used to load, generate and bind all textures used in this project. The compatible format for textures is tga.
+* The class uses the singleton design pattern; it can be instantiated only once, so the textures will be loaded only once during the game.
+*/
 class Texture
 {
 private:

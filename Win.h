@@ -1,12 +1,11 @@
-/**
-* Class used to draw and design 2 static doors and 2 moving doors with textures; when the moving doors begin to open is drawn a rectangle with a texture with the message: "you win" and the game ends.
-*/
-
 #pragma once
 #include "glut.h"  /*!< OpenGL Utility Toolkit. */
 #include "Point.h"  /*!< Used to manipulate point 2D objects. */
 #include "Drawable.h"  /*!< Base abstract class. */
 
+/**
+* Class used to draw and design 2 static doors and 2 moving doors with textures; when the moving doors begin to open is drawn a rectangle with a texture with the message: "you win" and the game ends.
+*/
 class Win : public Drawable
 {
 	double dx; /*!<Private variable which represents the double value used to translate the moving doors. */

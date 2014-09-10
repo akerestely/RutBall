@@ -62,7 +62,7 @@ void Map::getIntersection(Node first, Node second, Point &firstPoint, Point &sec
 {
 	Point firstCenter = first.getCenter();
 	Point secondCenter = second.getCenter();
-	double radius = WIDTH / 2;
+	double radius = BALL_RADIUS / 2;
 	double m;
 	if (secondCenter.z == firstCenter.z)
 		m = 0;
@@ -91,11 +91,11 @@ BallStreetPosition Map::BallCollision(int &nodeKey, Point ballCenter)
 	//Get the coordinates of the intersection with id "nodeKey"
 	Point lastNodePosition = nodes[nodeKey].getCenter();
 	//Get the radius of the ball
-	double radius = WIDTH / 8;
+	double radius = BALL_RADIUS / 8;
 
 	//Check if the tha ball is inside of the intersection
 	double insideNode = radius + sqrt((ballCenter.x - lastNodePosition.x) * (ballCenter.x - lastNodePosition.x) + (ballCenter.z - lastNodePosition.z) * (ballCenter.z - lastNodePosition.z));
-	if (insideNode <= WIDTH / 2)
+	if (insideNode <= BALL_RADIUS / 2)
 	{
 		return BallStreetPosition::Inside;
 	}
@@ -109,7 +109,7 @@ BallStreetPosition Map::BallCollision(int &nodeKey, Point ballCenter)
 
 		//Check if the tha ball is inside of the adjacent intersection
 		insideNode = radius + sqrt((ballCenter.x - nextNodePosition.x) * (ballCenter.x - nextNodePosition.x) + (ballCenter.z - nextNodePosition.z) * (ballCenter.z - nextNodePosition.z));
-		if (insideNode <= WIDTH / 2)
+		if (insideNode <= BALL_RADIUS / 2)
 		{
 			nodeKey = destinations[i];
 			return BallStreetPosition::Inside;
@@ -165,7 +165,7 @@ Node Map::GetPoint(int key)
 
 bool Map::ballInsideStreet(int firstNodeKey, int adjacentIndex, Point ballCenter)
 {
-	double radius = WIDTH / 8;
+	double radius = BALL_RADIUS / 8;
 	Street street = nodes[firstNodeKey].GetStreet(adjacentIndex);
 	if (!centerInsideStreet(street, ballCenter))
 	{
