@@ -114,11 +114,6 @@ int Tools::ReadBuildingsFromXML(char *fileName, std::vector<Building> &buildings
 	return 1;
 }
 
-Tools::~Tools(void)
-{
-}
-
-
 typedef struct
 {
         unsigned char IdSize,
