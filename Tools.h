@@ -32,11 +32,4 @@ public:
 	*@param buildings a vector where one should store buildings data
 	**/
 	static int ReadBuildingsFromXML(char *fileName, std::vector<Building> &buildings);
-	/*
-	*Static method which loads a TGA texture from a specified file.
-	*@param fileName name of the file which contains texture data
-	*@param width texture's width
-	*@param height texture's height
-	**/
-	static char*  esLoadTGA ( char *fileName, int *width, int *height );
 };

@@ -5,7 +5,9 @@ Texture::Texture(void)
 {
 	double tWidth, tHeight;
 	char* buffer ;
-
+	
+	//ball textures loading 
+	//football texture
 	buffer = esLoadTGA("Texture/football.tga",&tWidth,&tHeight);
 	glGenTextures ( 1, ballTex);
 	glBindTexture ( GL_TEXTURE_2D, ballTex[0]);
@@ -14,8 +16,8 @@ Texture::Texture(void)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP); 
 	glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0,  GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer ); 
 	free ( buffer );
-
-
+	
+	//basketball texture
 	buffer = esLoadTGA("Texture/basketball.tga",&tWidth,&tHeight);
 	glGenTextures ( 1, ballTex+1);
 	glBindTexture ( GL_TEXTURE_2D, ballTex[1]);
@@ -25,7 +27,7 @@ Texture::Texture(void)
 	glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0,  GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer ); 
 	free ( buffer );
 
-
+	//beachball texture
 	buffer = esLoadTGA("Texture/beachball.tga",&tWidth,&tHeight);
 	glGenTextures ( 1, ballTex+2);
 	glBindTexture ( GL_TEXTURE_2D, ballTex[2]);
@@ -36,6 +38,7 @@ Texture::Texture(void)
 	free ( buffer );
 
 
+	//tennisball texture
 	buffer = esLoadTGA("Texture/tennisball.tga",&tWidth,&tHeight);
 	glGenTextures ( 1, ballTex+3);
 	glBindTexture ( GL_TEXTURE_2D, ballTex[3]);
@@ -45,7 +48,7 @@ Texture::Texture(void)
 	glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0,  GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer ); 
 	free ( buffer );
 
-
+	//discoball texture
 	buffer = esLoadTGA("Texture/discoball.tga",&tWidth,&tHeight);
 	glGenTextures ( 1, ballTex+4);
 	glBindTexture ( GL_TEXTURE_2D, ballTex[4]);
@@ -54,7 +57,8 @@ Texture::Texture(void)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP); 
 	glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0,  GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer ); 
 	free ( buffer );
-
+	
+	//pass card texture  loading (Route 66 logo)
 	buffer = esLoadTGA("Texture/route.tga",&tWidth,&tHeight);
 	glGenTextures ( 1, cardTex);
 	glBindTexture ( GL_TEXTURE_2D, cardTex[0]);
@@ -63,7 +67,8 @@ Texture::Texture(void)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP); 
 	glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0,  GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer ); 
 	free ( buffer );
-
+	
+	//pass card support texture loading 
 	buffer = esLoadTGA("Texture/woodTexture.tga",&tWidth,&tHeight);
 	glGenTextures ( 1, cardTex+1);
 	glBindTexture ( GL_TEXTURE_2D, cardTex[1]);
@@ -73,6 +78,7 @@ Texture::Texture(void)
 	glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0,  GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer ); 
 	free ( buffer );
 
+	//sky textures loading 
 	buffer = esLoadTGA("Texture/Skybox-000.tga", &tWidth, &tHeight);
 	glGenTextures(1, skyCube);
 	glBindTexture(GL_TEXTURE_2D, skyCube[0]);
@@ -123,7 +129,7 @@ Texture::Texture(void)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer);
 	free(buffer);
 
-	//ground loading
+	//ground texture loading 
 	buffer = esLoadTGA("Texture/iarba.tga", &tWidth, &tHeight);
 	glGenTextures(1, skyCube+5);
 	glBindTexture(GL_TEXTURE_2D, skyCube[5]);
@@ -134,7 +140,7 @@ Texture::Texture(void)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer);
 	free(buffer);
 
-	//Road texture loading
+	//road texture loading
 	buffer = esLoadTGA("Texture/Skybox-005.tga", &tWidth, &tHeight);
 	glGenTextures(1, &roadTex);
 	glBindTexture(GL_TEXTURE_2D, roadTex);
@@ -144,7 +150,8 @@ Texture::Texture(void)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer);
 	free(buffer);
-
+	
+	//buildings textures loading 
 	buffer = esLoadTGA("Texture/7.tga", &tWidth, &tHeight);
 	glGenTextures(1, textures);
 	glBindTexture(GL_TEXTURE_2D, textures[0]);
@@ -234,10 +241,6 @@ Texture::Texture(void)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, buffer);
 	free(buffer);
-
-
-
-
 }
 
 char* Texture::esLoadTGA(char *fileName, double *width, double *height)
