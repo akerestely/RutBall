@@ -16,5 +16,4 @@ public:
 	static int ReadNodesFromXML(char *fileName, std::map<int,Node> &nodes);
 	static int ReadBuildingsFromXML(char *fileName, std::vector<Building> &buildings);
 	~Tools(void);
-	static char*  esLoadTGA ( char *fileName, int *width, int *height );
 };
