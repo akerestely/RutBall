@@ -1,7 +1,6 @@
 #include "Point.h"
 #include <glut.h>		// Need to include it here because the GL* types are required
-#define PI 3.1415265359
-#define PIdiv180 3.1415265359/180.0
+#define PIdiv180 0.01745329251
 
 /////////////////////////////////
 //Note: All angles in degrees  //
@@ -22,6 +21,7 @@ struct SF3dVector  //Float 3d-vect, normally used
 		y = b.y - a.y;
 		z = b.z - a.z;
 	}
+	// Scalar product of two vectors
 	double operator*(const SF3dVector &v)
 	{
 		return x*v.x + y*v.y+z*v.z;
